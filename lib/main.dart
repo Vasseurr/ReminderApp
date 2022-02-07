@@ -6,6 +6,8 @@ import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 
 void main() async {
+  //WidgetsFlutterBinding.ensureInitialized();
+
   await HiveManager.preferencesInit();
   //await Hive.initFlutter();
   runApp(GetMaterialApp(

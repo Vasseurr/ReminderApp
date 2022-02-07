@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -9,8 +10,16 @@ class ReminderList extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _body(context),
-    );
+        body: GetX<HomeController>(
+      initState: (state) async {
+        //await controller.initList();
+      },
+      builder: (controller) {
+        return controller.isLoading == false
+            ? _body(context)
+            : const Center(child: CircularProgressIndicator());
+      },
+    ));
   }
 
   _appBar(BuildContext context) {
@@ -78,11 +87,10 @@ class ReminderList extends GetView<HomeController> {
           children: [
             Expanded(
                 child: ListView.builder(
-              itemBuilder: (context, index) {
-                return _box(context, index);
-              },
-              itemCount: 4,
-            )),
+                    itemBuilder: (context, index) {
+                      return _box(context, index);
+                    },
+                    itemCount: HiveManager.instance.totalReminderObject())),
           ],
         ),
       ),
@@ -98,18 +106,12 @@ class ReminderList extends GetView<HomeController> {
           left: context.width * 0.05,
         ),
         decoration: BoxDecoration(
-            color: index == 0
-                ? Colors.red.shade400
-                : index == 1
-                    ? Colors.amber.shade600
-                    : index == 2
-                        ? Colors.blue.shade300
-                        : Colors.green.shade300,
+            color: controller.backgroundColor(index),
             borderRadius: BorderRadius.circular(15)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _infos(),
+            _infos(index),
             const Spacer(),
             _percentIndicator(index),
           ],
@@ -131,13 +133,7 @@ class ReminderList extends GetView<HomeController> {
             animation: true,
             animationDuration: 1000,
             backgroundColor: Colors.red.shade100,
-            progressColor: index == 0
-                ? Colors.blue.shade800
-                : index == 1
-                    ? Colors.red.shade900
-                    : index == 2
-                        ? Colors.green.shade800
-                        : Colors.purple.shade700,
+            progressColor: controller.circleColor(index),
             circularStrokeCap: CircularStrokeCap.round,
             center: const Text(
               "0",
@@ -149,26 +145,28 @@ class ReminderList extends GetView<HomeController> {
     );
   }
 
-  Expanded _infos() {
+  Expanded _infos(int index) {
     return Expanded(
       flex: 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _infoText("Birthday"),
+          _infoText(
+              HiveManager.instance.getReminderObject(index).title!, index),
           const SizedBox(height: 3),
-          _infoText("Birthday Description"),
+          _infoText(HiveManager.instance.getReminderObject(index).description!,
+              index),
           const SizedBox(height: 3),
-          _infoText("15 May 2019"),
+          _infoText(HiveManager.instance.getReminderObject(index).date!, index),
         ],
       ),
     );
   }
 
-  _infoText(String text) => AutoSizeText(
+  _infoText(String text, int index) => AutoSizeText(
         text,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: controller.textColor(index)),
         minFontSize: 16,
         maxLines: 1,
       );

@@ -24,7 +24,6 @@ class HomePage extends GetView<HomeController> {
         margin: EdgeInsets.all(context.mediumHeightValue),
         child: GetX<HomeController>(
           initState: (state) async {
-            Get.find<HomeController>().getUser();
             //box = await Hive.openBox('user');
           },
           builder: (_) {
@@ -32,7 +31,6 @@ class HomePage extends GetView<HomeController> {
               children: [
                 Center(
                   //child: Obx(() => Text(controller.userName)),
-                  child: Text(_.userName),
                 ),
                 const Spacer(),
                 /*RuzgarButton(
@@ -46,7 +44,6 @@ class HomePage extends GetView<HomeController> {
                 VasseurrBttn(
                     buttonText: "Save value",
                     onPressed: () async {
-                      _.saveUser();
                       Utils.instance.showSnackBar(context,
                           content: HiveManager.instance
                                   .getStringValue(HiveKeys.USERNAME) ??

@@ -19,15 +19,10 @@ class SecondPage extends StatelessWidget {
         child: Column(
           children: [
             Center(
-              child: Obx(() => Text(homeController.userName)),
-              // child: Text(homeController.getFromHiveManager()),
-            ),
+                // child: Text(homeController.getFromHiveManager()),
+                ),
             const Spacer(),
-            VasseurrBttn(
-                buttonText: "Change value",
-                onPressed: () {
-                  homeController.changeValue();
-                }),
+            VasseurrBttn(buttonText: "Change value", onPressed: () {}),
           ],
         ),
         /*Center(

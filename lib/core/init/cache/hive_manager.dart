@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:reminder_app/core/constants/hive_keys.dart';
+import 'package:reminder_app/core/objects/reminder_card.dart';
+import 'package:reminder_app/core/objects/reminder_card_adapter.dart';
 
 class HiveManager {
   static final HiveManager _instance = HiveManager._init();
@@ -12,17 +17,23 @@ class HiveManager {
   HiveManager._init() {
     openBox();
   }
+
   static preferencesInit() async {
-    // Directory directory = await pathProvider.getApplicationDocumentsDirectory();
-    // Hive.init(directory.path);
     await Hive.initFlutter();
-    //  HiveManager._init();
-    openBox();
+
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+
+    Hive
+      ..init(appDocumentDir.path)
+      ..registerAdapter(ReminderCardAdapter());
+
+    await openBox();
+    _db = Hive.box('user');
     return;
   }
 
   static Future<void> openBox() async {
-    _db = await Hive.openBox('user');
+   _db = await Hive.openBox('user');
   }
 
   Future<void> setStringValue(HiveKeys key, String value) async {
@@ -48,6 +59,14 @@ class HiveManager {
   }
 
   T? getGenericValue<T>(HiveKeys key) => _db.get(key.toString());
+
+  Future<void> addReminderObject(ReminderCard card) async {
+    await _db.add(card);
+  }
+
+  ReminderCard getReminderObject(int index) => _db.getAt(index);
+
+  int totalReminderObject() => _db.length;
 
   void clear() {
     _db.clear();

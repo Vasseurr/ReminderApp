@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/core/constants/hive_keys.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
+import 'package:reminder_app/core/objects/reminder_card.dart';
 import 'package:reminder_app/home/repository/home_repository.dart';
 
 class HomeController extends GetxController {
@@ -15,9 +16,6 @@ class HomeController extends GetxController {
   final _textCurrentColor = Colors.white.obs;
   final _pickerColor = Colors.white.obs;
 
-  get userName => _userName.value;
-  set userName(value) => _userName.value = value;
-
   set isLoading(value) => _isLoading.value = value;
   get isLoading => _isLoading.value;
   set backgroundCurrentColor(value) => _backgroundCurrentColor.value = value;
@@ -29,20 +27,51 @@ class HomeController extends GetxController {
   set pickerColor(value) => _pickerColor.value = value;
   get pickerColor => _pickerColor.value;
 
-  getUser() async {
-    var result = await _repository.getUser();
-    _userName.value = result.name!;
+  initList() async {
+    _isLoading.value = true;
+    /*titleList = List.generate(4, (index) => 'Birthday');
+    descriptionList = List.generate(4, (index) => 'Birthday Description');
+    dateList = List.generate(4, (index) => '15 May 2019');*/
+    await HiveManager.instance.addReminderObject(ReminderCard(
+        title: "Birthday",
+        description: "Birthday Description",
+        date: "19 May 2015",
+        backgroundColor: Colors.red.shade400.toString(),
+        circleColor: Colors.blue.shade800.toString(),
+        textColor: Colors.white.toString()));
+    await HiveManager.instance.addReminderObject(ReminderCard(
+        title: "Birthday",
+        description: "Birthday Description",
+        date: "19 May 2015",
+        backgroundColor: Colors.amber.shade600.toString(),
+        circleColor: Colors.red.shade900.toString(),
+        textColor: Colors.white.toString()));
+    await HiveManager.instance.addReminderObject(ReminderCard(
+        title: "Birthday",
+        description: "Birthday Description",
+        date: "19 May 2015",
+        backgroundColor: Colors.blue.shade300.toString(),
+        circleColor: Colors.green.shade800.toString(),
+        textColor: Colors.white.toString()));
+    await HiveManager.instance.addReminderObject(ReminderCard(
+        title: "Birthday",
+        description: "Birthday Description",
+        date: "19 May 2015",
+        backgroundColor: Colors.green.shade300.toString(),
+        circleColor: Colors.purple.shade700.toString(),
+        textColor: Colors.white.toString()));
+    _isLoading.value = false;
   }
 
-  changeValue() {
-    userName = "Template";
+  Color backgroundColor(int index) {
+    return Color(int.parse(((HiveManager.instance.getReminderObject(index).backgroundColor!.split('(0x')[1].split(')')[0])), radix: 16));
   }
 
-  saveUser() async {
-    HiveManager.instance.setStringValue(HiveKeys.USERNAME, userName);
+  Color circleColor(int index) {
+    return Color(int.parse(((HiveManager.instance.getReminderObject(index).circleColor!.split('(0x')[1].split(')')[0])), radix: 16));
   }
 
-  getFromHiveManager() {
-    return HiveManager.instance.getStringValue(HiveKeys.USERNAME);
+  Color textColor(int index) {
+    return Color(int.parse(((HiveManager.instance.getReminderObject(index).textColor!.split('(0x')[1].split(')')[0])), radix: 16));
   }
 }

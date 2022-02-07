@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
+import 'package:reminder_app/core/init/cache/hive_manager.dart';
+import 'package:reminder_app/core/objects/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -15,7 +17,7 @@ class AddReminder extends GetView<HomeController> {
     return Scaffold(
         backgroundColor: Colors.grey.shade200,
         body: GetX<HomeController>(
-          initState: (state) {},
+          initState: (state) async {},
           builder: (controller) {
             return _body(context);
           },
@@ -49,6 +51,15 @@ class AddReminder extends GetView<HomeController> {
             IconButton(
                 onPressed: () {
                   //openPopup();
+                  HiveManager.instance.addReminderObject(ReminderCard(
+                      title: "Hive",
+                      description: "Hive manager",
+                      date: "07.02.2022",
+                      backgroundColor:
+                          controller.backgroundCurrentColor.toString(),
+                      circleColor: controller.circleCurrentColor.toString(),
+                      textColor: controller.textCurrentColor.toString()));
+                  Get.back();
                 },
                 icon: Container(
                   decoration: BoxDecoration(

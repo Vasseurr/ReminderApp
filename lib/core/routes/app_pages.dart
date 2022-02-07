@@ -1,0 +1,24 @@
+import 'package:get/get.dart';
+import 'package:reminder_app/core/pages/login_page.dart';
+import 'package:reminder_app/home/bindings/home_binding.dart';
+import 'package:reminder_app/home/ui/home_page.dart';
+import 'package:reminder_app/home/ui/second_page.dart';
+
+import 'app_routes.dart';
+
+class AppPages {
+  static final pages = [
+    GetPage(
+        name: Routes.INITIAL,
+        page: () => const HomePage(),
+        binding: HomeBinding()),
+    GetPage(
+        name: Routes.LOGIN,
+        page: () => const LoginPage(),
+        binding: HomeBinding()),
+    GetPage(
+        name: Routes.SECOND,
+        page: () => const SecondPage(),
+        binding: HomeBinding()),
+  ];
+}

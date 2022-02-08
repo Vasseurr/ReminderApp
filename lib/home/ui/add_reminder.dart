@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
-import 'package:reminder_app/core/objects/reminder_card.dart';
+import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 

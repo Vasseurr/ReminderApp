@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
-import 'package:reminder_app/core/objects/reminder_card.dart';
+import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -25,8 +25,24 @@ class ReminderList extends GetView<HomeController> {
     Color buttonBlue = Colors.blue.shade600;
     return Container(
       height: context.height * 0.1,
-      color: Colors.grey.shade100,
-      child: Row(
+      color: controller.isDarkMode ? Colors.black45 : Colors.grey.shade100,
+      child: /*Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+           IconButton(
+              onPressed: () {
+                if (controller.isDarkMode) {
+                  Get.changeTheme(ThemeData.light());
+                } else {
+                  Get.changeTheme(ThemeData.dark());
+                }
+                controller.isDarkMode = !controller.isDarkMode;
+              },
+              icon: Icon(
+                controller.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: controller.isDarkMode ? Colors.white : Colors.black,
+              )),*/
+          Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
@@ -36,19 +52,24 @@ class ReminderList extends GetView<HomeController> {
               },
               icon: Icon(
                 Icons.add,
-                color: buttonBlue,
+                color: controller.isDarkMode ? Colors.white : buttonBlue,
               )),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: InkWell(
                 onTap: () {},
-                child: Text("Edit", style: TextStyle(color: buttonBlue)),
+                child: Text("Edit",
+                    style: TextStyle(
+                        color:
+                            controller.isDarkMode ? Colors.white : buttonBlue)),
               ),
             ),
           ),
         ],
       ),
+      //   ],
+      // ),
     );
   }
 

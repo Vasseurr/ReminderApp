@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reminder_app/core/constants/hive_keys.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
-import 'package:reminder_app/core/objects/reminder_card.dart';
+import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/home/repository/home_repository.dart';
 
 class HomeController extends GetxController {
   final HomeRepository _repository;
   HomeController(this._repository) : assert(_repository != null);
 
-  final RxString _userName = "".obs;
+  final _isDarkMode = false.obs;
   final _isLoading = false.obs;
   final _backgroundCurrentColor = Colors.blue.shade400.obs;
   final _circleCurrentColor = Colors.black.obs;
   final _textCurrentColor = Colors.white.obs;
   final _pickerColor = Colors.white.obs;
 
+  set isDarkMode(value) => _isDarkMode.value = value;
+  get isDarkMode => _isDarkMode.value;
   set isLoading(value) => _isLoading.value = value;
   get isLoading => _isLoading.value;
   set backgroundCurrentColor(value) => _backgroundCurrentColor.value = value;
@@ -64,14 +65,32 @@ class HomeController extends GetxController {
   }
 
   Color backgroundColor(int index) {
-    return Color(int.parse(((HiveManager.instance.getReminderObject(index).backgroundColor!.split('(0x')[1].split(')')[0])), radix: 16));
+    return Color(int.parse(
+        ((HiveManager.instance
+            .getReminderObject(index)
+            .backgroundColor!
+            .split('(0x')[1]
+            .split(')')[0])),
+        radix: 16));
   }
 
   Color circleColor(int index) {
-    return Color(int.parse(((HiveManager.instance.getReminderObject(index).circleColor!.split('(0x')[1].split(')')[0])), radix: 16));
+    return Color(int.parse(
+        ((HiveManager.instance
+            .getReminderObject(index)
+            .circleColor!
+            .split('(0x')[1]
+            .split(')')[0])),
+        radix: 16));
   }
 
   Color textColor(int index) {
-    return Color(int.parse(((HiveManager.instance.getReminderObject(index).textColor!.split('(0x')[1].split(')')[0])), radix: 16));
+    return Color(int.parse(
+        ((HiveManager.instance
+            .getReminderObject(index)
+            .textColor!
+            .split('(0x')[1]
+            .split(')')[0])),
+        radix: 16));
   }
 }

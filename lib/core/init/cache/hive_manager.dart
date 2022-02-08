@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:reminder_app/core/constants/hive_keys.dart';
-import 'package:reminder_app/core/objects/reminder_card.dart';
+import 'package:reminder_app/core/models/reminder_card.dart';
 
 class HiveManager {
   static final HiveManager _instance = HiveManager._init();

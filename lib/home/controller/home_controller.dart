@@ -18,6 +18,7 @@ class HomeController extends GetxController {
   final _inputDescription = "".obs;
   final _selectedDate = "".obs;
   final _datetime = DateTime.now().obs;
+  final _isEditable = false.obs;
 
   set isDarkMode(value) => _isDarkMode.value = value;
   get isDarkMode => _isDarkMode.value;
@@ -39,6 +40,8 @@ class HomeController extends GetxController {
   get selectedDate => _selectedDate.value;
   set datetime(value) => _datetime.value = value;
   get datetime => _datetime.value;
+  set isEditable(value) => _isEditable.value = value;
+  get isEditable => _isEditable.value;
 
   Color backgroundColor(int index) {
     return Color(int.parse(

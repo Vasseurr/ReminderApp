@@ -59,11 +59,16 @@ class ReminderList extends GetView<HomeController> {
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  controller.isEditable = !controller.isEditable;
+                },
                 child: Text("Edit",
                     style: TextStyle(
-                        color:
-                            controller.isDarkMode ? Colors.white : buttonBlue)),
+                        color: controller.isDarkMode
+                            ? Colors.white
+                            : controller.isEditable == true
+                                ? Colors.red
+                                : buttonBlue)),
               ),
             ),
           ),
@@ -84,8 +89,8 @@ class ReminderList extends GetView<HomeController> {
           Padding(
             padding: EdgeInsets.only(
                 top: context.height * 0.03,
-                left: context.width * 0.1,
-                right: context.width * 0.1),
+                left: context.width * 0.07,
+                right: context.width * 0.07),
             child: const Text(
               "Widgetly",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
@@ -102,8 +107,8 @@ class ReminderList extends GetView<HomeController> {
       child: Padding(
         padding: EdgeInsets.only(
             top: context.height * 0.03,
-            left: context.width * 0.1,
-            right: context.width * 0.1),
+            left: context.width * 0.07,
+            right: context.width * 0.07),
         child: Column(
           children: [
             Expanded(
@@ -130,7 +135,11 @@ class ReminderList extends GetView<HomeController> {
                 left: context.width * 0.05,
               ),
               decoration: BoxDecoration(
-                  color: controller.backgroundColor(index),
+                  color:
+                      HiveManager.instance.getReminderObject(index).isActive ==
+                              false
+                          ? Colors.black
+                          : controller.backgroundColor(index),
                   borderRadius: BorderRadius.circular(15)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -143,23 +152,27 @@ class ReminderList extends GetView<HomeController> {
             ),
           ),
           SizedBox(width: context.width * 0.01),
-          SizedBox(
-            height: context.height * 0.07,
-            width: context.width * 0.1,
-            child: Switch(
-              value: HiveManager.instance.getReminderObject(index).isActive!,
-              onChanged: (value) async {
-                controller.isLoading = true;
-                ReminderCard card =
-                    HiveManager.instance.getReminderObject(index);
-                card.isActive = value;
-                await HiveManager.instance.updateReminderObject(card, index);
-                controller.isLoading = false;
-              },
-              activeTrackColor: Colors.lightGreenAccent,
-              activeColor: Colors.green,
-            ),
-          ),
+          controller.isEditable == true
+              ? SizedBox(
+                  height: context.height * 0.07,
+                  width: context.width * 0.1,
+                  child: Switch(
+                    value:
+                        HiveManager.instance.getReminderObject(index).isActive!,
+                    onChanged: (value) async {
+                      controller.isLoading = true;
+                      ReminderCard card =
+                          HiveManager.instance.getReminderObject(index);
+                      card.isActive = value;
+                      await HiveManager.instance
+                          .updateReminderObject(card, index);
+                      controller.isLoading = false;
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

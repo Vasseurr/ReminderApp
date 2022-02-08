@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
+import 'package:reminder_app/core/objects/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -11,9 +12,7 @@ class ReminderList extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GetX<HomeController>(
-      initState: (state) async {
-        //await controller.initList();
-      },
+      initState: (state) async {},
       builder: (controller) {
         return controller.isLoading == false
             ? _body(context)
@@ -101,21 +100,45 @@ class ReminderList extends GetView<HomeController> {
     return Container(
       margin: EdgeInsets.only(bottom: context.height * 0.02),
       height: context.height * 0.12,
-      child: Container(
-        padding: EdgeInsets.only(
-          left: context.width * 0.05,
-        ),
-        decoration: BoxDecoration(
-            color: controller.backgroundColor(index),
-            borderRadius: BorderRadius.circular(15)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _infos(index),
-            const Spacer(),
-            _percentIndicator(index),
-          ],
-        ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: context.width * 0.05,
+              ),
+              decoration: BoxDecoration(
+                  color: controller.backgroundColor(index),
+                  borderRadius: BorderRadius.circular(15)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _infos(index),
+                  const Spacer(),
+                  _percentIndicator(index),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: context.width * 0.03),
+          SizedBox(
+            height: context.height * 0.05,
+            width: context.width * 0.05,
+            child: Switch(
+              value: HiveManager.instance.getReminderObject(index).isActive!,
+              onChanged: (value) async {
+                controller.isLoading = true;
+                ReminderCard card =
+                    HiveManager.instance.getReminderObject(index);
+                card.isActive = value;
+                await HiveManager.instance.updateReminderObject(card, index);
+                controller.isLoading = false;
+              },
+              activeTrackColor: Colors.lightGreenAccent,
+              activeColor: Colors.green,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:hive/hive.dart';
-@HiveType(typeId: 0)
+
+part 'reminder_card.g.dart';
+
+@HiveType(typeId: 1)
 class ReminderCard extends HiveObject {
   @HiveField(0)
   String? title;
@@ -15,6 +18,8 @@ class ReminderCard extends HiveObject {
   String? circleColor;
   @HiveField(5)
   String? textColor;
+  @HiveField(6)
+  bool? isActive;
 
   ReminderCard(
       {this.title,
@@ -22,7 +27,8 @@ class ReminderCard extends HiveObject {
       this.date,
       this.backgroundColor,
       this.circleColor,
-      this.textColor});
+      this.textColor,
+      this.isActive = true});
 
   ReminderCard.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -31,6 +37,7 @@ class ReminderCard extends HiveObject {
     backgroundColor = json['backgroundColor'];
     circleColor = json['circleColor'];
     textColor = json['textColor'];
+    isActive = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,6 +48,7 @@ class ReminderCard extends HiveObject {
     data['backgroundColor'] = backgroundColor;
     data['circleColor'] = circleColor;
     data['textColor'] = textColor;
+    data['isActive'] = isActive;
     return data;
   }
 }

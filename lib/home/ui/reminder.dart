@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
@@ -141,10 +142,10 @@ class ReminderList extends GetView<HomeController> {
               ),
             ),
           ),
-          SizedBox(width: context.width * 0.03),
+          SizedBox(width: context.width * 0.01),
           SizedBox(
-            height: context.height * 0.05,
-            width: context.width * 0.05,
+            height: context.height * 0.07,
+            width: context.width * 0.1,
             child: Switch(
               value: HiveManager.instance.getReminderObject(index).isActive!,
               onChanged: (value) async {
@@ -179,8 +180,15 @@ class ReminderList extends GetView<HomeController> {
             backgroundColor: Colors.red.shade100,
             progressColor: controller.circleColor(index),
             circularStrokeCap: CircularStrokeCap.round,
-            center: const Text(
-              "0",
+            center: Text(
+              HiveManager.instance.getReminderObject(index).date != null
+                  ? HiveManager.instance
+                      .getReminderObject(index)
+                      .date!
+                      .difference(DateTime.now())
+                      .inDays
+                      .toString()
+                  : "0",
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
@@ -191,7 +199,7 @@ class ReminderList extends GetView<HomeController> {
 
   Expanded _infos(int index) {
     return Expanded(
-      flex: 3,
+      flex: 4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -202,7 +210,10 @@ class ReminderList extends GetView<HomeController> {
           _infoText(HiveManager.instance.getReminderObject(index).description!,
               index),
           const SizedBox(height: 3),
-          _infoText(HiveManager.instance.getReminderObject(index).date!, index),
+          _infoText(
+              DateFormat('MMMM dd, yyyy')
+                  .format(HiveManager.instance.getReminderObject(index).date!),
+              index),
         ],
       ),
     );

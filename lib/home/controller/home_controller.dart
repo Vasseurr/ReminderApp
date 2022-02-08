@@ -14,6 +14,10 @@ class HomeController extends GetxController {
   final _circleCurrentColor = Colors.black.obs;
   final _textCurrentColor = Colors.white.obs;
   final _pickerColor = Colors.white.obs;
+  final _inputTitle = "".obs;
+  final _inputDescription = "".obs;
+  final _selectedDate = "".obs;
+  final _datetime = DateTime.now().obs;
 
   set isDarkMode(value) => _isDarkMode.value = value;
   get isDarkMode => _isDarkMode.value;
@@ -27,42 +31,14 @@ class HomeController extends GetxController {
   get textCurrentColor => _textCurrentColor.value;
   set pickerColor(value) => _pickerColor.value = value;
   get pickerColor => _pickerColor.value;
-
-  initList() async {
-    _isLoading.value = true;
-    /*titleList = List.generate(4, (index) => 'Birthday');
-    descriptionList = List.generate(4, (index) => 'Birthday Description');
-    dateList = List.generate(4, (index) => '15 May 2019');*/
-    await HiveManager.instance.addReminderObject(ReminderCard(
-        title: "Birthday",
-        description: "Birthday Description",
-        date: "19 May 2015",
-        backgroundColor: Colors.red.shade400.toString(),
-        circleColor: Colors.blue.shade800.toString(),
-        textColor: Colors.white.toString()));
-    await HiveManager.instance.addReminderObject(ReminderCard(
-        title: "Birthday",
-        description: "Birthday Description",
-        date: "19 May 2015",
-        backgroundColor: Colors.amber.shade600.toString(),
-        circleColor: Colors.red.shade900.toString(),
-        textColor: Colors.white.toString()));
-    await HiveManager.instance.addReminderObject(ReminderCard(
-        title: "Birthday",
-        description: "Birthday Description",
-        date: "19 May 2015",
-        backgroundColor: Colors.blue.shade300.toString(),
-        circleColor: Colors.green.shade800.toString(),
-        textColor: Colors.white.toString()));
-    await HiveManager.instance.addReminderObject(ReminderCard(
-        title: "Birthday",
-        description: "Birthday Description",
-        date: "19 May 2015",
-        backgroundColor: Colors.green.shade300.toString(),
-        circleColor: Colors.purple.shade700.toString(),
-        textColor: Colors.white.toString()));
-    _isLoading.value = false;
-  }
+  set inputTitle(value) => _inputTitle.value = value;
+  get inputTitle => _inputTitle.value;
+  set inputDescription(value) => _inputDescription.value = value;
+  get inputDescription => _inputDescription.value;
+  set selectedDate(value) => _selectedDate.value = value;
+  get selectedDate => _selectedDate.value;
+  set datetime(value) => _datetime.value = value;
+  get datetime => _datetime.value;
 
   Color backgroundColor(int index) {
     return Color(int.parse(

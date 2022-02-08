@@ -11,7 +11,7 @@ class ReminderCard extends HiveObject {
   @HiveField(1)
   String? description;
   @HiveField(2)
-  String? date;
+  DateTime? date;
   @HiveField(3)
   String? backgroundColor;
   @HiveField(4)

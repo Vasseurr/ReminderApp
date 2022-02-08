@@ -19,7 +19,7 @@ class ReminderCardAdapter extends TypeAdapter<ReminderCard> {
     return ReminderCard(
       title: fields[0] as String?,
       description: fields[1] as String?,
-      date: fields[2] as String?,
+      date: fields[2] as DateTime?,
       backgroundColor: fields[3] as String?,
       circleColor: fields[4] as String?,
       textColor: fields[5] as String?,

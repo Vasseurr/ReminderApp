@@ -65,6 +65,7 @@ class VasseurrTFF extends StatelessWidget {
       maxLength: maxLength,
       keyboardType: keyboardType,
       decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
           prefixIcon: icon,
           fillColor: fillColor ?? Theme.of(context).colorScheme.background,
           filled: true,
@@ -85,9 +86,12 @@ class VasseurrTFF extends StatelessWidget {
           labelText: labelText,
           hintText: hintText,
           hintStyle: Theme.of(context).textTheme.caption?.copyWith(
-              fontSize: 15, fontWeight: FontWeight.w600, color: hintColor)),
+              fontSize: 14, fontWeight: FontWeight.w400, color: hintColor)),
       style: TextStyle(
-          color: textColor, fontFamily: "Poppins", fontWeight: FontWeight.w500),
+          color: textColor,
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w400,
+          fontSize: 14),
       onSaved: onSaved,
       validator: validator,
     );

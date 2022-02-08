@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
+import 'package:reminder_app/core/components/text/text_form_field.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
@@ -14,6 +17,7 @@ class AddReminder extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.grey.shade200,
         body: GetX<HomeController>(
           initState: (state) async {},
@@ -51,13 +55,16 @@ class AddReminder extends GetView<HomeController> {
                 onPressed: () async {
                   //openPopup();
                   await HiveManager.instance.addReminderObject(ReminderCard(
-                      title: "Hive",
-                      description: "Hive manager",
-                      date: "07.02.2022",
+                      title: controller.inputTitle,
+                      description: controller.inputDescription,
+                      date: controller.datetime,
                       backgroundColor:
                           controller.backgroundCurrentColor.toString(),
                       circleColor: controller.circleCurrentColor.toString(),
                       textColor: controller.textCurrentColor.toString()));
+                  controller.inputTitle = "";
+                  controller.inputDescription = "";
+                  controller.selectedDate = "";
                   Get.offAndToNamed(Routes.REMINDER_LIST);
                 },
                 icon: Container(
@@ -78,18 +85,20 @@ class AddReminder extends GetView<HomeController> {
 
   _body(BuildContext context) {
     return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _appBar(context),
-          SizedBox(height: context.height * 0.05),
-          _box(context),
-          SizedBox(height: context.height * 0.02),
-          _inputFields(context),
-          SizedBox(height: context.height * 0.05),
-          _colors(context),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _appBar(context),
+            SizedBox(height: context.height * 0.05),
+            _box(context),
+            SizedBox(height: context.height * 0.02),
+            _inputFields(context),
+            SizedBox(height: context.height * 0.05),
+            _colors(context),
+          ],
+        ),
       ),
     );
   }
@@ -182,7 +191,8 @@ class AddReminder extends GetView<HomeController> {
       height: context.height * 0.2,
       margin: EdgeInsets.symmetric(horizontal: context.width * 0.1),
       width: context.width * 0.8,
-      padding: EdgeInsets.only(left: context.width * 0.05),
+      padding: EdgeInsets.only(
+          left: context.width * 0.05, right: context.width * 0.05),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: Column(
@@ -190,21 +200,65 @@ class AddReminder extends GetView<HomeController> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
+              height: context.height * 0.03,
               width: context.width * 0.8,
               padding: const EdgeInsets.only(bottom: 6.0),
               decoration: const BoxDecoration(
                   border: Border(
                       bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: const Text("Birthday")),
+              child: VasseurrTFF(
+                hintText: "Title",
+                borderWidth: 1.0,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                fillColor: Colors.white,
+                borderColor: Colors.white,
+                hintColor: Colors.black,
+                textColor: Colors.black,
+                // onSaved: (value) => controller.inputTitle,
+                onChanged: (value) => controller.inputTitle = value,
+              )),
           Container(
+              height: context.height * 0.03,
               width: context.width * 0.8,
               padding: const EdgeInsets.only(bottom: 6.0),
               decoration: const BoxDecoration(
                   border: Border(
                       bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: const Text("Birthday's birthday gift")),
-          SizedBox(
-              width: context.width * 0.8, child: const Text("Select a date")),
+              child: VasseurrTFF(
+                hintText: "Description",
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                fillColor: Colors.white,
+                borderColor: Colors.white,
+                hintColor: Colors.black,
+                textColor: Colors.black,
+                onChanged: (value) => controller.inputDescription = value,
+              )),
+          InkWell(
+            onTap: () {
+              openCalendar(context);
+            },
+            child: SizedBox(
+                width: context.width * 0.8,
+                height: controller.selectedDate.toString() == ""
+                    ? context.height * 0.03
+                    : context.height * 0.045,
+                child: Row(
+                  children: [
+                    const Text("Select a date"),
+                    const Spacer(),
+                    controller.selectedDate.toString() == ""
+                        ? const SizedBox()
+                        : Container(
+                            padding: EdgeInsets.all(context.width * 0.02),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Text(controller.selectedDate.toString())),
+                  ],
+                )),
+          ),
         ],
       ),
     );
@@ -247,9 +301,14 @@ class AddReminder extends GetView<HomeController> {
             backgroundColor: Colors.red.shade100,
             progressColor: controller.circleCurrentColor,
             circularStrokeCap: CircularStrokeCap.round,
-            center: const Text(
-              "22",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+            center: Text(
+              controller.selectedDate == ""
+                  ? "0"
+                  : (controller.datetime.day - DateTime.now().day).toString(),
+              /* .difference()
+                      .inDays
+                      .toString(),*/
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
         ),
@@ -264,11 +323,15 @@ class AddReminder extends GetView<HomeController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _infoText("Birtday"),
+          _infoText(
+              controller.inputTitle == "" ? "Title" : controller.inputTitle),
           const SizedBox(height: 8),
-          _infoText("Birthday's birthday gift"),
+          _infoText(controller.inputDescription == ""
+              ? "Description"
+              : controller.inputDescription),
           const SizedBox(height: 8),
-          _infoText("06 May 1999"),
+          _infoText(
+              controller.selectedDate == "" ? "Date" : controller.selectedDate),
         ],
       ),
     );
@@ -321,5 +384,19 @@ class AddReminder extends GetView<HomeController> {
         );
       },
     );
+  }
+
+  openCalendar(BuildContext context) {
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: DateTime.now(),
+        maxTime: DateTime(2050, 1, 1), onChanged: (date) {
+      print('change $date');
+    }, onConfirm: (date) {
+      print('confirm $date');
+      String formattedDate = DateFormat('MMMM dd, yyyy').format(date);
+      controller.datetime = date;
+      controller.selectedDate = formattedDate;
+    }, currentTime: DateTime.now(), locale: LocaleType.en);
   }
 }

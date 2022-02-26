@@ -109,16 +109,23 @@ class ReminderList extends GetView<HomeController> {
             top: context.height * 0.03,
             left: context.width * 0.07,
             right: context.width * 0.07),
-        child: Column(
-          children: [
-            Expanded(
-                child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return _box(context, index);
-                    },
-                    itemCount: HiveManager.instance.totalReminderObject())),
-          ],
-        ),
+        child: HiveManager.instance.totalReminderObject() == 0
+            ? const Center(
+                child: Text(
+                "There is no any widgets. Please add a widget.",
+                style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
+              ))
+            : Column(
+                children: [
+                  Expanded(
+                      child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return _box(context, index);
+                          },
+                          itemCount:
+                              HiveManager.instance.totalReminderObject())),
+                ],
+              ),
       ),
     );
   }

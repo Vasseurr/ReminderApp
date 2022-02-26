@@ -210,7 +210,7 @@ class AddReminder extends GetView<HomeController> {
                 hintText: "Title",
                 borderWidth: 1.0,
                 keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.next,
                 fillColor: Colors.white,
                 borderColor: Colors.white,
                 hintColor: Colors.black,
@@ -304,7 +304,9 @@ class AddReminder extends GetView<HomeController> {
             center: Text(
               controller.selectedDate == ""
                   ? "0"
-                  : (controller.datetime.day - DateTime.now().day).toString(),
+                  : (controller.datetime.difference(DateTime.now()))
+                      .inDays
+                      .toString(),
               /* .difference()
                       .inDays
                       .toString(),*/

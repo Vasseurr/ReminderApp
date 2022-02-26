@@ -28,39 +28,7 @@ class HomePage extends GetView<HomeController> {
           },
           builder: (_) {
             return Column(
-              children: [
-                Center(
-                  //child: Obx(() => Text(controller.userName)),
-                ),
-                const Spacer(),
-                /*RuzgarButton(
-                    buttonText: "Add user",
-                    onPressed: () async {
-                      await _.getUser();
-                      //HiveManager.setStringValue('user', _.userName);
-                      _.saveUser();
-                    }),
-                const Spacer(),*/
-                VasseurrBttn(
-                    buttonText: "Save value",
-                    onPressed: () async {
-                      Utils.instance.showSnackBar(context,
-                          content: HiveManager.instance
-                                  .getStringValue(HiveKeys.USERNAME) ??
-                              " ");
-                    }),
-                const Spacer(),
-                VasseurrBttn(
-                    height: context.height * 0.08,
-                    width: context.width * 0.4,
-                    radius: 15,
-                    buttonText: "Go to Second Page",
-                    onPressed: () {
-                      Get.toNamed(Routes.SECOND);
-                    }),
-                Google(),
-                Facebook(),
-              ],
+              children: [],
             );
           },
         ),

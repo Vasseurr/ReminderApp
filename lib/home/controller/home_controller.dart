@@ -8,6 +8,15 @@ class HomeController extends GetxController {
   final HomeRepository _repository;
   HomeController(this._repository) : assert(_repository != null);
 
+  // * Home bottomBarIndex
+  final _currentBarIndex = 0.obs;
+  set currentBarIndex(value) => _currentBarIndex.value = value;
+  get currentBarIndex => _currentBarIndex.value;
+
+  changeBarIndex(int index) {
+    _currentBarIndex.value = index;
+  }
+
   final _isDarkMode = false.obs;
   final _isLoading = false.obs;
   final _backgroundCurrentColor = Colors.blue.shade400.obs;

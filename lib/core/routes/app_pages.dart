@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:reminder_app/core/pages/login_page.dart';
 import 'package:reminder_app/home/bindings/home_binding.dart';
 import 'package:reminder_app/home/ui/add_reminder.dart';
+import 'package:reminder_app/home/ui/home.dart';
 import 'package:reminder_app/home/ui/home_page.dart';
 import 'package:reminder_app/home/ui/reminder.dart';
 
@@ -17,6 +18,7 @@ class AppPages {
         name: Routes.LOGIN,
         page: () => const LoginPage(),
         binding: HomeBinding()),
+    GetPage(name: Routes.HOME, page: () => Home(), binding: HomeBinding()),
     GetPage(
         name: Routes.REMINDER_LIST,
         page: () => ReminderList(),

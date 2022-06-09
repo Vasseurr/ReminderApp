@@ -16,12 +16,9 @@ class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Getx Example"),
-      ),
-      body: Container(
-        margin: EdgeInsets.all(context.mediumHeightValue),
+    return Center(
+      child: Text("HomePage"),
+      /* margin: EdgeInsets.all(context.mediumHeightValue),
         child: GetX<HomeController>(
           initState: (state) async {
             //box = await Hive.openBox('user');
@@ -31,8 +28,7 @@ class HomePage extends GetView<HomeController> {
               children: [],
             );
           },
-        ),
-      ),
+        ),*/
     );
   }
 }

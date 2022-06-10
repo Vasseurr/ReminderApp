@@ -2,33 +2,118 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reminder_app/core/components/buttons/custom_button.dart';
-import 'package:reminder_app/core/components/buttons/facebook_button.dart';
-import 'package:reminder_app/core/components/buttons/google_button.dart';
-import 'package:reminder_app/core/components/utils/utils.dart';
-import 'package:reminder_app/core/constants/hive_keys.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
-import 'package:reminder_app/core/init/cache/hive_manager.dart';
-import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
+
+import '../../core/components/widgets/day_card.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("HomePage"),
-      /* margin: EdgeInsets.all(context.mediumHeightValue),
-        child: GetX<HomeController>(
-          initState: (state) async {
-            //box = await Hive.openBox('user');
-          },
-          builder: (_) {
-            return Column(
-              children: [],
-            );
-          },
-        ),*/
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.getWidth * 0.06,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [_month(context), _days(context), _content(context)],
+      ),
+    );
+  }
+
+  Column _content(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Ongoing",
+          style: TextStyle(
+              fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
+        ),
+        SizedBox(
+          height: context.getHeight * 0.4,
+          child: SingleChildScrollView(),
+        )
+      ],
+    );
+  }
+
+  Row _days(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        DayCard(
+          dateNumber: "12",
+          dayName: "Wed",
+        ),
+        DayCard(
+          dateNumber: "13",
+          dayName: "Thu",
+        ),
+        DayCard(
+          dateNumber: "14",
+          dayName: "Fri",
+        ),
+        DayCard(
+          dateNumber: "15",
+          dayName: "Sat",
+        ),
+      ],
+    );
+  }
+
+  _month(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: InkWell(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              Text(
+                "Mar",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
+          ),
+        )),
+        Expanded(
+          flex: 4,
+          child: Center(
+            child: Text(
+              "April",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 24),
+            ),
+          ),
+        ),
+        Expanded(
+            child: InkWell(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                "May",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        )),
+      ],
     );
   }
 }

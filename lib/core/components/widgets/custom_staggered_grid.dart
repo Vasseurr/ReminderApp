@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:reminder_app/core/components/widgets/task_card.dart';
+import 'package:reminder_app/core/components/widgets/total_task_card.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
 
 class CustomStaggerGrid extends StatelessWidget {
@@ -18,7 +18,7 @@ class CustomStaggerGrid extends StatelessWidget {
         StaggeredGridTile.count(
           crossAxisCellCount: 1,
           mainAxisCellCount: 0.8,
-          child: TaskCard(
+          child: TotalTaskCard(
             numberOfTask: 22,
             type: "Done",
           ),
@@ -26,7 +26,7 @@ class CustomStaggerGrid extends StatelessWidget {
         StaggeredGridTile.count(
           crossAxisCellCount: 1,
           mainAxisCellCount: 0.6,
-          child: TaskCard(
+          child: TotalTaskCard(
             numberOfTask: 7,
             type: "In progress",
           ),
@@ -34,7 +34,7 @@ class CustomStaggerGrid extends StatelessWidget {
         StaggeredGridTile.count(
           crossAxisCellCount: 1,
           mainAxisCellCount: 0.85,
-          child: TaskCard(
+          child: TotalTaskCard(
             numberOfTask: 12,
             type: "Waiting for Review",
           ),
@@ -42,7 +42,7 @@ class CustomStaggerGrid extends StatelessWidget {
         StaggeredGridTile.count(
           crossAxisCellCount: 1,
           mainAxisCellCount: 0.65,
-          child: TaskCard(
+          child: TotalTaskCard(
             numberOfTask: 10,
             type: "Ongoing",
           ),

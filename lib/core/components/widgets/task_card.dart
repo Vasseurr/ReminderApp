@@ -1,45 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:reminder_app/core/extension/context_extension.dart';
 
 import '../../constants/colors.dart';
 
 class TaskCard extends StatelessWidget {
-  int numberOfTask;
-  String type;
-  TaskCard({
-    required this.numberOfTask,
-    required this.type,
-    Key? key,
-  }) : super(key: key);
+  String title;
+  String description;
+  String time;
+  TaskCard(
+      {Key? key,
+      required this.title,
+      required this.description,
+      required this.time})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: MyColors.taskCardColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Spacer(),
           Text(
-            numberOfTask.toString(),
+            title,
             style: const TextStyle(
-              fontSize: 24,
-              color: Colors.white,
               fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: context.getHeight * 0.02),
-          Text(
-            type,
-            style: const TextStyle(
               fontSize: 18,
-              color: MyColors.pendingTaskColor,
+              color: Colors.white,
             ),
           ),
-          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    color: MyColors.pendingTaskColor,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: MyColors.pendingTaskColor,
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

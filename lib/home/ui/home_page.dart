@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reminder_app/core/components/widgets/task_card.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -32,10 +33,55 @@ class HomePage extends GetView<HomeController> {
           style: TextStyle(
               fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
         ),
+        SizedBox(height: context.height * 0.04),
         SizedBox(
-          height: context.getHeight * 0.4,
-          child: SingleChildScrollView(),
-        )
+            height: context.getHeight * 0.45,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "9 AM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(height: context.height * 0.03),
+                        Text(
+                          "10 AM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(height: context.height * 0.05),
+                      ],
+                    ),
+                    SizedBox(width: context.width * 0.05),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: context.height * 0.1,
+                            child: TaskCard(
+                                title: "Mobile App Design",
+                                description: "Mike and ana",
+                                time: "09.00 - 10.00"),
+                          ),
+                          SizedBox(height: context.height * 0.05),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+              itemCount: 3,
+              shrinkWrap: true,
+            ))
       ],
     );
   }

@@ -70,8 +70,8 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         },
         items: [
           CustomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
+          CustomNavigationBarItem(icon: Icon(CupertinoIcons.add_circled)),
           CustomNavigationBarItem(icon: Icon(Icons.task)),
-          CustomNavigationBarItem(icon: Icon(CupertinoIcons.person)),
           CustomNavigationBarItem(icon: Icon(Icons.notifications_none_rounded)),
         ],
       ),

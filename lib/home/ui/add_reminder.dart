@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/components/text/text_form_field.dart';
+import 'package:reminder_app/core/constants/colors.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
@@ -18,7 +19,7 @@ class AddReminder extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: MyColors.backgroundColor,
         body: GetX<HomeController>(
           initState: (state) async {},
           builder: (controller) {
@@ -30,7 +31,7 @@ class AddReminder extends GetView<HomeController> {
   _appBar(BuildContext context) {
     return Container(
       height: context.height * 0.1,
-      color: Colors.grey.shade100,
+      color: MyColors.backgroundColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
@@ -44,7 +45,7 @@ class AddReminder extends GetView<HomeController> {
                 icon: Container(
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Colors.grey),
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: const Icon(
                     Icons.close,
                     color: Colors.white,
@@ -70,7 +71,7 @@ class AddReminder extends GetView<HomeController> {
                 icon: Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: Colors.blue.shade800),
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: const Icon(
                     Icons.check,
                     color: Colors.white,
@@ -90,16 +91,33 @@ class AddReminder extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _appBar(context),
+            // _appBar(context),
             SizedBox(height: context.height * 0.05),
             _box(context),
             SizedBox(height: context.height * 0.02),
             _inputFields(context),
             SizedBox(height: context.height * 0.05),
             _colors(context),
+            SizedBox(height: context.height * 0.04),
+            _save(context),
           ],
         ),
       ),
+    );
+  }
+
+  VasseurrBttn _save(BuildContext context) {
+    return VasseurrBttn(
+      buttonText: "Kaydet",
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      width: context.width * 0.4,
+      onPressed: () {
+        //! Control title, description and date are not null
+        //! Select date + select hour (ex. 9-10)
+      },
+      buttonColor: MyColors.pendingTaskColor,
+      borderColor: MyColors.pendingTaskColor,
     );
   }
 
@@ -237,27 +255,29 @@ class AddReminder extends GetView<HomeController> {
               )),
           InkWell(
             onTap: () {
+              FocusScope.of(context).unfocus();
               openCalendar(context);
             },
             child: SizedBox(
-                width: context.width * 0.8,
-                height: controller.selectedDate.toString() == ""
-                    ? context.height * 0.03
-                    : context.height * 0.045,
-                child: Row(
-                  children: [
-                    const Text("Select a date"),
-                    const Spacer(),
-                    controller.selectedDate.toString() == ""
-                        ? const SizedBox()
-                        : Container(
-                            padding: EdgeInsets.all(context.width * 0.02),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text(controller.selectedDate.toString())),
-                  ],
-                )),
+              width: context.width * 0.8,
+              height: controller.selectedDate.toString() == ""
+                  ? context.height * 0.03
+                  : context.height * 0.045,
+              child: Row(
+                children: [
+                  const Text("Select a date"),
+                  const Spacer(),
+                  controller.selectedDate.toString() == ""
+                      ? const SizedBox()
+                      : Container(
+                          padding: EdgeInsets.all(context.width * 0.02),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Text(controller.selectedDate.toString())),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -399,6 +419,6 @@ class AddReminder extends GetView<HomeController> {
       String formattedDate = DateFormat('MMMM dd, yyyy').format(date);
       controller.datetime = date;
       controller.selectedDate = formattedDate;
-    }, currentTime: DateTime.now(), locale: LocaleType.en);
+    }, currentTime: DateTime.now(), locale: LocaleType.tr);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -7,7 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/components/text/text_form_field.dart';
+import 'package:reminder_app/core/components/utils/utils.dart';
 import 'package:reminder_app/core/constants/colors.dart';
+import 'package:reminder_app/core/extension/time_extension.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
@@ -28,7 +29,12 @@ class AddReminder extends GetView<HomeController> {
                 DateFormat('dd MMMM yyyy', 'tr_TR').format(DateTime.now());
             controller.selectedDate = formattedDate;
           },
+          didUpdateWidget: (oldWidget, state) {
+            print("HEELLLL2");
+            controller.timeOfDay = TimeOfDay.now();
+          },
           builder: (controller) {
+            print("HEELLLL3");
             return _body(context);
           },
         ));
@@ -303,6 +309,13 @@ class AddReminder extends GetView<HomeController> {
         helpText: "Saat Seç");
 
     if (timeOfDay != null && timeOfDay != controller.timeOfDay) {
+      if (timeOfDay.compareTo(controller.timeOfDay) == -1) {
+        //! Check date, ıf same day, check hour and minute
+        Utils.instance
+            .showSnackBar(context, content: "Geriye dönük oluşturulamaz");
+        return;
+      }
+      print("tıme -> " + timeOfDay.hourOfPeriod.toString());
       controller.timeOfDay = timeOfDay;
     }
   }

@@ -37,4 +37,5 @@ class MyColors {
   static const Color selectedTabIndexColor = Color.fromRGBO(37, 197, 248, 1);
   static const Color pendingTaskColor = Color.fromRGBO(149, 165, 223, 1);
   static const Color taskCardColor = Color.fromRGBO(84, 81, 214, 1);
+  static const Color saveReminderButtonColor = Color.fromARGB(255, 66, 99, 218);
 }

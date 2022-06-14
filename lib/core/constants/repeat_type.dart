@@ -1,0 +1,1 @@
+enum RepeatType { ONCE, DAILY, MONDAY_TO_FRIDAY, CUSTOM }

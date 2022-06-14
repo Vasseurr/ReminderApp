@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reminder_app/core/constants/repeat_type.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/home/repository/home_repository.dart';
@@ -81,4 +82,19 @@ class HomeController extends GetxController {
             .split(')')[0])),
         radix: 16));
   }
+
+  // * Add Reminder
+  final _isVibrate = false.obs;
+  set isVibrate(value) => _isVibrate.value = value;
+  get isVibrate => _isVibrate.value;
+
+  final _timeOfDay = TimeOfDay.now().obs;
+  set timeOfDay(value) => _timeOfDay.value = value;
+  get timeOfDay => _timeOfDay.value;
+  get timeOfDayHour => _timeOfDay.value.hour;
+  get timeOfDayMinute => _timeOfDay.value.minute;
+
+  final _repeatType = RepeatType.ONCE.obs;
+  set repeatType(value) => _repeatType.value = value;
+  get repeatType => _repeatType.value.name;
 }

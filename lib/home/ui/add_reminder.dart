@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
@@ -21,7 +22,12 @@ class AddReminder extends GetView<HomeController> {
         resizeToAvoidBottomInset: true,
         backgroundColor: MyColors.backgroundColor,
         body: GetX<HomeController>(
-          initState: (state) async {},
+          initState: (state) async {
+            initializeDateFormatting();
+            String formattedDate =
+                DateFormat('dd MMMM yyyy', 'tr_TR').format(DateTime.now());
+            controller.selectedDate = formattedDate;
+          },
           builder: (controller) {
             return _body(context);
           },
@@ -86,19 +92,188 @@ class AddReminder extends GetView<HomeController> {
 
   _body(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // _appBar(context),
-            SizedBox(height: context.height * 0.05),
+            SizedBox(height: context.height * 0.01),
             _box(context),
-            SizedBox(height: context.height * 0.02),
+            SizedBox(height: context.height * 0.01),
             _inputFields(context),
-            SizedBox(height: context.height * 0.05),
-            _colors(context),
-            SizedBox(height: context.height * 0.04),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _save(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: context.height * 0.02),
+        child: VasseurrBttn(
+          buttonText: "Kaydet",
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          width: context.width * 0.4,
+          onPressed: () {
+            //! Control title, description and date are not null
+            //! Select date + select hour (ex. 9-10)
+          },
+          buttonColor: MyColors.saveReminderButtonColor,
+          borderColor: MyColors.saveReminderButtonColor,
+        ),
+      ),
+    );
+  }
+
+  _inputFields(BuildContext context) {
+    return Expanded(
+      child: Container(
+        height: context.height * 0.4,
+        width: context.width * 0.8,
+        padding: EdgeInsets.only(
+            left: context.width * 0.05,
+            right: context.width * 0.05,
+            top: context.height * 0.02),
+        margin: EdgeInsets.only(bottom: context.height * 0.01),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+                padding: const EdgeInsets.only(bottom: 6.0),
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey, width: 0.2))),
+                child: VasseurrTFF(
+                  hintText: "Title",
+                  //  borderWidth: 1.0,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  fillColor: Colors.white,
+                  borderColor: Colors.white,
+                  hintColor: Colors.black,
+                  textColor: Colors.black,
+                  // onSaved: (value) => controller.inputTitle,
+                  onChanged: (value) => controller.inputTitle = value,
+                )),
+            Container(
+                padding: const EdgeInsets.only(bottom: 6.0),
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey, width: 0.2))),
+                child: VasseurrTFF(
+                  hintText: "Description",
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  fillColor: Colors.white,
+                  borderColor: Colors.white,
+                  hintColor: Colors.black,
+                  textColor: Colors.black,
+                  onChanged: (value) => controller.inputDescription = value,
+                )),
+            InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                openCalendar(context);
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: context.height * 0.01),
+                width: context.width * 0.8,
+                /* height: controller.selectedDate.toString() == ""
+                    ? context.height * 0.03
+                    : context.height * 0.045,*/
+                height: context.height * 0.045,
+                child: Row(
+                  children: [
+                    _header("Date"),
+                    const Spacer(),
+                    Container(
+                        padding: EdgeInsets.all(context.width * 0.02),
+                        /*   decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(15)),*/
+                        child: controller.selectedDate.toString() == ""
+                            ? const SizedBox()
+                            : _value(controller.selectedDate.toString())),
+                    const SizedBox(width: 10),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                _selectTime(context);
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: context.height * 0.01),
+                width: context.width * 0.8,
+                height: context.height * 0.045,
+                child: Row(
+                  children: [
+                    _header("Hour"),
+                    const Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.height * 0.01,
+                          horizontal: context.width * 0.06),
+                      /*    decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(15)),*/
+                      child: _value(
+                        controller.timeOfDayHour.toString() +
+                            ":" +
+                            controller.timeOfDayMinute.toString(),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                openCalendar(context);
+              },
+              child: Container(
+                width: context.width * 0.8,
+                margin: EdgeInsets.symmetric(vertical: context.height * 0.01),
+                height: context.height * 0.045,
+                child: Row(
+                  children: [
+                    _header("Repeat"),
+                    const Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: context.height * 0.01,
+                          horizontal: context.width * 0.06),
+                      child: _value(
+                        controller.repeatType.toString(),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400),
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _header("Vibrate when event time is up"),
+                Switch(
+                    value: controller.isVibrate,
+                    onChanged: (value) {
+                      controller.isVibrate = value;
+                    }),
+              ],
+            ),
             _save(context),
           ],
         ),
@@ -106,182 +281,30 @@ class AddReminder extends GetView<HomeController> {
     );
   }
 
-  VasseurrBttn _save(BuildContext context) {
-    return VasseurrBttn(
-      buttonText: "Kaydet",
-      fontSize: 20,
-      fontWeight: FontWeight.w500,
-      width: context.width * 0.4,
-      onPressed: () {
-        //! Control title, description and date are not null
-        //! Select date + select hour (ex. 9-10)
-      },
-      buttonColor: MyColors.pendingTaskColor,
-      borderColor: MyColors.pendingTaskColor,
+  Text _value(String value) {
+    return Text(
+      value,
+      style: const TextStyle(fontSize: 17),
     );
   }
 
-  Container _colors(BuildContext context) {
-    return Container(
-      height: context.height * 0.2,
-      margin: EdgeInsets.symmetric(horizontal: context.width * 0.1),
-      width: context.width * 0.8,
-      padding: EdgeInsets.only(
-          left: context.width * 0.05, right: context.width * 0.05),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-              width: context.width * 0.8,
-              padding: const EdgeInsets.only(bottom: 6.0),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [const Text("Background color"), _color(1, context)],
-              )),
-          Container(
-              width: context.width * 0.8,
-              padding: const EdgeInsets.only(bottom: 6.0),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [const Text("Circle"), _color(2, context)],
-              )),
-          SizedBox(
-              width: context.width * 0.8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Text color"),
-                  _color(3, context),
-                ],
-              )),
-        ],
-      ),
-    );
-  }
+  Text _header(String header) => Text(
+        header,
+        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+      );
 
-  _color(int type, BuildContext context) {
-    return InkWell(
-      onTap: () {
-        _colorPickerPopup(type, context);
-      },
-      child: Container(
-          height: 25,
-          width: 25,
-          decoration: BoxDecoration(
-              color: type == 1
-                  ? controller.backgroundCurrentColor == Colors.white
-                      ? Colors.black
-                      : controller.backgroundCurrentColor
-                  : type == 2
-                      ? controller.circleCurrentColor == Colors.white
-                          ? Colors.black
-                          : controller.circleCurrentColor
-                      : controller.textCurrentColor == Colors.white
-                          ? Colors.black
-                          : controller.textCurrentColor,
-              shape: BoxShape.circle),
-          child: Container(
-              height: 20,
-              width: 20,
-              margin: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(
-                  color: type == 1
-                      ? controller.backgroundCurrentColor
-                      : type == 2
-                          ? controller.circleCurrentColor
-                          : controller.textCurrentColor,
-                  shape: BoxShape.circle),
-              child: const Text(" "))),
-    );
-  }
+  _selectTime(BuildContext context) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.dial,
+        confirmText: "Onayla",
+        cancelText: "İptal Et",
+        helpText: "Saat Seç");
 
-  Container _inputFields(BuildContext context) {
-    return Container(
-      height: context.height * 0.2,
-      margin: EdgeInsets.symmetric(horizontal: context.width * 0.1),
-      width: context.width * 0.8,
-      padding: EdgeInsets.only(
-          left: context.width * 0.05, right: context.width * 0.05),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-              height: context.height * 0.03,
-              width: context.width * 0.8,
-              padding: const EdgeInsets.only(bottom: 6.0),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: VasseurrTFF(
-                hintText: "Title",
-                borderWidth: 1.0,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                fillColor: Colors.white,
-                borderColor: Colors.white,
-                hintColor: Colors.black,
-                textColor: Colors.black,
-                // onSaved: (value) => controller.inputTitle,
-                onChanged: (value) => controller.inputTitle = value,
-              )),
-          Container(
-              height: context.height * 0.03,
-              width: context.width * 0.8,
-              padding: const EdgeInsets.only(bottom: 6.0),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.grey, width: 0.2))),
-              child: VasseurrTFF(
-                hintText: "Description",
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                fillColor: Colors.white,
-                borderColor: Colors.white,
-                hintColor: Colors.black,
-                textColor: Colors.black,
-                onChanged: (value) => controller.inputDescription = value,
-              )),
-          InkWell(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              openCalendar(context);
-            },
-            child: SizedBox(
-              width: context.width * 0.8,
-              height: controller.selectedDate.toString() == ""
-                  ? context.height * 0.03
-                  : context.height * 0.045,
-              child: Row(
-                children: [
-                  const Text("Select a date"),
-                  const Spacer(),
-                  controller.selectedDate.toString() == ""
-                      ? const SizedBox()
-                      : Container(
-                          padding: EdgeInsets.all(context.width * 0.02),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Text(controller.selectedDate.toString())),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    if (timeOfDay != null && timeOfDay != controller.timeOfDay) {
+      controller.timeOfDay = timeOfDay;
+    }
   }
 
   Container _box(BuildContext context) {
@@ -294,8 +317,9 @@ class AddReminder extends GetView<HomeController> {
           left: context.width * 0.05,
         ),
         decoration: BoxDecoration(
-            color: controller.backgroundCurrentColor,
-            borderRadius: BorderRadius.circular(15)),
+          color: MyColors.taskCardColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -341,72 +365,34 @@ class AddReminder extends GetView<HomeController> {
   Expanded _infos() {
     return Expanded(
       flex: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _infoText(
-              controller.inputTitle == "" ? "Title" : controller.inputTitle),
-          const SizedBox(height: 8),
-          _infoText(controller.inputDescription == ""
-              ? "Description"
-              : controller.inputDescription),
-          const SizedBox(height: 8),
-          _infoText(
-              controller.selectedDate == "" ? "Date" : controller.selectedDate),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _infoText(
+                controller.inputTitle == "" ? "Title" : controller.inputTitle),
+            //  const SizedBox(height: 8),
+            _infoText(controller.inputDescription == ""
+                ? "Description"
+                : controller.inputDescription),
+            // const SizedBox(height: 8),
+            _infoText(controller.selectedDate == ""
+                ? "Date"
+                : controller.selectedDate),
+          ],
+        ),
       ),
     );
   }
 
   Text _infoText(String text) => Text(
         text,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(color: controller.textCurrentColor, fontSize: 16),
       );
-
-  _colorPickerPopup(int type, BuildContext context) {
-    Color pickerColor = type == 1
-        ? controller.backgroundCurrentColor
-        : type == 2
-            ? controller.circleCurrentColor
-            : controller.textCurrentColor;
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, innerSetState) {
-            return AlertDialog(
-              title: const Text("Pick a color"),
-              content: ColorPicker(
-                pickerColor: pickerColor,
-                onColorChanged: (value) {
-                  pickerColor = value;
-                },
-              ),
-              actions: [
-                VasseurrBttn(
-                    buttonText: "Got it",
-                    onPressed: () {
-                      switch (type) {
-                        case 1:
-                          controller.backgroundCurrentColor = pickerColor;
-                          break;
-                        case 2:
-                          controller.circleCurrentColor = pickerColor;
-                          break;
-                        case 3:
-                          controller.textCurrentColor = pickerColor;
-                          break;
-                      }
-                      Get.back();
-                    })
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
 
   openCalendar(BuildContext context) {
     DatePicker.showDatePicker(context,
@@ -416,7 +402,7 @@ class AddReminder extends GetView<HomeController> {
       print('change $date');
     }, onConfirm: (date) {
       print('confirm $date');
-      String formattedDate = DateFormat('MMMM dd, yyyy').format(date);
+      String formattedDate = DateFormat('dd MMMM yyyy', 'tr_TR').format(date);
       controller.datetime = date;
       controller.selectedDate = formattedDate;
     }, currentTime: DateTime.now(), locale: LocaleType.tr);

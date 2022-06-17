@@ -97,4 +97,8 @@ class HomeController extends GetxController {
   final _repeatType = RepeatType.ONCE.obs;
   set repeatType(value) => _repeatType.value = value;
   get repeatType => _repeatType.value.name;
+
+  final _selectedRepatTypeIndex = 0.obs;
+  set selectedRepatTypeIndex(value) => _selectedRepatTypeIndex.value = value;
+  get selectedRepatTypeIndex => _selectedRepatTypeIndex.value;
 }

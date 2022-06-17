@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/components/text/text_form_field.dart';
 import 'package:reminder_app/core/components/utils/utils.dart';
 import 'package:reminder_app/core/constants/colors.dart';
+import 'package:reminder_app/core/constants/repeat_type.dart';
 import 'package:reminder_app/core/extension/time_extension.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
@@ -245,7 +247,7 @@ class AddReminder extends GetView<HomeController> {
             InkWell(
               onTap: () {
                 FocusScope.of(context).unfocus();
-                openCalendar(context);
+                _selectRepatType(context);
               },
               child: Container(
                 width: context.width * 0.8,
@@ -259,9 +261,11 @@ class AddReminder extends GetView<HomeController> {
                       padding: EdgeInsets.symmetric(
                           vertical: context.height * 0.01,
                           horizontal: context.width * 0.06),
-                      child: _value(
-                        controller.repeatType.toString(),
-                      ),
+                      child: _value(controller.selectedRepatTypeIndex == 2
+                          ? "Mon to Fri"
+                          : RepeatType
+                              .values[controller.selectedRepatTypeIndex].name
+                              .toString()),
                     ),
                     const SizedBox(width: 10),
                     Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400),
@@ -270,9 +274,8 @@ class AddReminder extends GetView<HomeController> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _header("Vibrate when event time is up"),
+                Flexible(child: _header("Vibrate when event time is up")),
                 Switch(
                     value: controller.isVibrate,
                     onChanged: (value) {
@@ -287,15 +290,75 @@ class AddReminder extends GetView<HomeController> {
     );
   }
 
-  Text _value(String value) {
-    return Text(
+  Future<dynamic> _selectRepatType(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Obx(
+            () => Container(
+              height: context.height * 0.4,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: context.height * 0.02,
+                  bottom: context.height * 0.02,
+                  left: context.width * 0.04,
+                  right: context.width * 0.04,
+                ),
+                child: Column(
+                  children: [
+                    _repeatTypeButton(title: "Once", index: 0),
+                    _repeatTypeButton(title: "Daily", index: 1),
+                    _repeatTypeButton(title: "Mon to Fri", index: 2),
+                    _repeatTypeButton(title: "Custom", index: 3),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  TextButton _repeatTypeButton({required String title, required int index}) {
+    return TextButton(
+      style: TextButton.styleFrom(
+          backgroundColor: controller.selectedRepatTypeIndex == index
+              ? MyColors.pendingTaskColor
+              : Colors.white),
+      onPressed: () {
+        controller.selectedRepatTypeIndex = index;
+        Get.back();
+      },
+      child: ListTile(
+        leading: _header(title),
+        trailing: controller.selectedRepatTypeIndex == index
+            ? const Icon(
+                Icons.check,
+                color: Colors.white,
+                size: 30,
+              )
+            : const SizedBox(),
+      ),
+    );
+  }
+
+  AutoSizeText _value(String value) {
+    return AutoSizeText(
       value,
+      maxLines: 1,
+      maxFontSize: 15,
       style: const TextStyle(fontSize: 17),
     );
   }
 
-  Text _header(String header) => Text(
+  AutoSizeText _header(String header) => AutoSizeText(
         header,
+        maxLines: 1,
         style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
       );
 
@@ -352,7 +415,12 @@ class AddReminder extends GetView<HomeController> {
           child: CircularPercentIndicator(
             radius: 40.0,
             lineWidth: 10.0,
-            percent: 0.5,
+            percent: (controller.datetime.difference(DateTime.now())).inDays >=
+                    365
+                ? 1
+                : (controller.datetime.difference(DateTime.now())).inDays / 365,
+
+            //0.5,
             animation: true,
             animationDuration: 1000,
             backgroundColor: Colors.red.shade100,
@@ -418,6 +486,6 @@ class AddReminder extends GetView<HomeController> {
       String formattedDate = DateFormat('dd MMMM yyyy', 'tr_TR').format(date);
       controller.datetime = date;
       controller.selectedDate = formattedDate;
-    }, currentTime: DateTime.now(), locale: LocaleType.tr);
+    }, currentTime: controller.datetime, locale: LocaleType.tr);
   }
 }

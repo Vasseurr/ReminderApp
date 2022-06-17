@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_app/core/components/widgets/task_card.dart';
+import 'package:reminder_app/core/constants/colors.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
@@ -17,9 +19,27 @@ class HomePage extends GetView<HomeController> {
         horizontal: context.getWidth * 0.06,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [_month(context), _days(context), _content(context)],
+        children: [
+          //  _month(context),
+          // _days(context),
+          CalendarTimeline(
+            initialDate: DateTime.now(),
+            firstDate: DateTime(DateTime.now().year - 1, 1, 1),
+            lastDate: DateTime(DateTime.now().year + 4, 1, 1),
+            onDateSelected: (date) => print(date),
+            leftMargin: context.getWidth * 0.1,
+            monthColor: Colors.white,
+            dayColor: MyColors.taskCardColor,
+            activeDayColor: Colors.white,
+            activeBackgroundDayColor: MyColors.pendingTaskColor,
+            dotsColor: Colors.white,
+            selectableDayPredicate: (date) => date.day != 23,
+            locale: 'en_ISO',
+          ),
+          _content(context),
+        ],
       ),
     );
   }

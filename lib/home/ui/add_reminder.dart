@@ -127,8 +127,8 @@ class AddReminder extends GetView<HomeController> {
             //! Control title, description and date are not null
             //! Select date + select hour (ex. 9-10)
           },
-          buttonColor: MyColors.saveReminderButtonColor,
-          borderColor: MyColors.saveReminderButtonColor,
+          buttonColor: MyColors.taskCardColor,
+          borderColor: MyColors.taskCardColor,
         ),
       ),
     );
@@ -277,6 +277,7 @@ class AddReminder extends GetView<HomeController> {
               children: [
                 Flexible(child: _header("Vibrate when event time is up")),
                 Switch(
+                    activeColor: MyColors.taskCardColor,
                     value: controller.isVibrate,
                     onChanged: (value) {
                       controller.isVibrate = value;

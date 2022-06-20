@@ -19,12 +19,12 @@ class Utils {
         content: Text(content),
         actions: <Widget>[
           // ignore: deprecated_member_use
-          FlatButton(
+          /*  FlatButton(
             child: const Text('Kapat'),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop('dialog');
             },
-          )
+          )*/
         ],
       ),
     );

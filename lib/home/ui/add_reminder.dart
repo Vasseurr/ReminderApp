@@ -22,7 +22,7 @@ class AddReminder extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         backgroundColor: MyColors.backgroundColor,
         body: GetX<HomeController>(
           initState: (state) async {
@@ -100,15 +100,17 @@ class AddReminder extends GetView<HomeController> {
 
   _body(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Column(
-          children: [
-            // _appBar(context),
-            SizedBox(height: context.height * 0.01),
-            _box(context),
-            SizedBox(height: context.height * 0.01),
-            _inputFields(context),
-          ],
+      child: Form(
+        child: Center(
+          child: Column(
+            children: [
+              // _appBar(context),
+              SizedBox(height: context.height * 0.01),
+              _box(context),
+              SizedBox(height: context.height * 0.01),
+              _inputFields(context),
+            ],
+          ),
         ),
       ),
     );
@@ -311,7 +313,7 @@ class AddReminder extends GetView<HomeController> {
                   left: context.width * 0.04,
                   right: context.width * 0.04,
                 ),
-                child: Column(
+                child: ListView(
                   children: [
                     _repeatTypeButton(title: "Once", index: 0),
                     _repeatTypeButton(title: "Daily", index: 1),

@@ -26,6 +26,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: MyColors.backgroundColor,
       /*  context.read<ThemeNotifier>().currentTheme == ThemeData.light()
               ? MyColors.backgroundColor

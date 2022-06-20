@@ -1,12 +1,11 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:reminder_app/core/constants/colors.dart';
-import 'package:reminder_app/core/init/theme/theme_notifier.dart';
 
 import '../../../home/controller/home_controller.dart';
+import 'custom_drawer.dart';
 
 class CustomScaffold extends StatefulWidget {
   const CustomScaffold({
@@ -35,15 +34,6 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         toolbarHeight: context.height * 0.1,
         backgroundColor: MyColors.backgroundColor,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            context.read<ThemeNotifier>().changeTheme();
-          },
-          icon: const Icon(
-            Icons.menu,
-            size: 30,
-          ),
-        ),
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(
@@ -61,7 +51,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           )
         ],
       ),
-      //drawer: Drawer(),
+      drawer: const CustomDrawer(),
       body: widget.body,
       bottomNavigationBar: CustomNavigationBar(
         iconSize: 30.0,
@@ -77,10 +67,11 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           });
         },
         items: [
-          CustomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
-          CustomNavigationBarItem(icon: Icon(CupertinoIcons.add_circled)),
-          CustomNavigationBarItem(icon: Icon(Icons.task)),
-          CustomNavigationBarItem(icon: Icon(Icons.notifications_none_rounded)),
+          CustomNavigationBarItem(icon: const Icon(CupertinoIcons.home)),
+          CustomNavigationBarItem(icon: const Icon(CupertinoIcons.add_circled)),
+          CustomNavigationBarItem(icon: const Icon(Icons.task)),
+          CustomNavigationBarItem(
+              icon: const Icon(Icons.notifications_none_rounded)),
         ],
       ),
     );

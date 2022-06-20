@@ -1,1 +1,1 @@
-enum RepeatType { ONCE, DAILY, MONDAY_TO_FRIDAY, CUSTOM }
+enum RepeatType { once, daily, monToFri, custom }

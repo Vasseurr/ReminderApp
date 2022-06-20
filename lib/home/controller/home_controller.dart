@@ -94,7 +94,7 @@ class HomeController extends GetxController {
   get timeOfDayHour => _timeOfDay.value.hour;
   get timeOfDayMinute => _timeOfDay.value.minute;
 
-  final _repeatType = RepeatType.ONCE.obs;
+  final _repeatType = RepeatType.once.obs;
   set repeatType(value) => _repeatType.value = value;
   get repeatType => _repeatType.value.name;
 

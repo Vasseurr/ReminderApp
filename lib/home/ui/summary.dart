@@ -37,7 +37,6 @@ class Summary extends StatelessWidget {
       children: [
         _typeReview(context),
         Container(
-          height: context.getHeight * 0.35,
           margin: EdgeInsets.only(top: context.getHeight * 0.03),
           child: const CustomStaggerGrid(),
         )

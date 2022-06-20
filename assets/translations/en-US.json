@@ -5,19 +5,42 @@
     },
     "button": {
         "add": "Add",
-        "save": "Save"
+        "save": "Save",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
     },
     "feature": {
         "monthlyReview": "Monthly Review"
     },
     "task": {
+        "tasks": "Tasks",
         "pendingTask": "Tasks are pending",
         "done" : "Done",
         "inProgress": "In Progress",
         "onGoing": "OnGoing",
         "waitReview": "Waiting for Review"
     },
+    "addReminder": {
+        "title": "Title",
+        "description": "Description",
+        "date": "Date",
+        "hour": "Hour", 
+        "repeat": "Repeat",
+        "vibrate": "Vibrate when event time is up",
+        "selectHour": "Select Hour",
+        "once": "Once",
+        "daily": "Daily",
+        "monToFri": "Mon to Fri",
+        "custom": "Custom"
+    },
     "basic": {
-        "hi": "Hi"
+        "hi": "Hi",
+        "appLanguage": "App Language",
+        "turkish": "Turkish",
+        "english": "English"
+    },
+    "hour": {
+        "hourBeforeMidday": "{}.00 AM",
+        "hourAfterMidday": "{}.00 PM"
     }
 }

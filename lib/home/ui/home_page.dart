@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:reminder_app/core/components/widgets/task_card.dart';
 import 'package:reminder_app/core/constants/colors.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
+import 'package:reminder_app/core/init/lang/locale_keys.g.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
 import '../../core/components/widgets/day_card.dart';
@@ -36,7 +38,7 @@ class HomePage extends GetView<HomeController> {
             activeBackgroundDayColor: MyColors.pendingTaskColor,
             dotsColor: Colors.white,
             selectableDayPredicate: (date) => date.day != 23,
-            locale: 'en_ISO',
+            locale: context.locale.toString() == "tr_TR" ? 'tr' : 'en_ISO',
           ),
           _content(context),
         ],
@@ -48,12 +50,14 @@ class HomePage extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Ongoing",
-          style: TextStyle(
-              fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
+        Padding(
+          padding: EdgeInsets.only(bottom: context.height * 0.04),
+          child: Text(
+            LocaleKeys.task_onGoing.tr() + " " + LocaleKeys.task_tasks.tr(),
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
+          ),
         ),
-        SizedBox(height: context.height * 0.04),
         SizedBox(
             height: context.getHeight * 0.45,
             child: ListView.builder(
@@ -64,7 +68,7 @@ class HomePage extends GetView<HomeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "9 AM",
+                          LocaleKeys.hour_hourBeforeMidday.plural(9),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -72,7 +76,7 @@ class HomePage extends GetView<HomeController> {
                         ),
                         SizedBox(height: context.height * 0.03),
                         Text(
-                          "10 AM",
+                          LocaleKeys.hour_hourBeforeMidday.plural(10),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -81,19 +85,21 @@ class HomePage extends GetView<HomeController> {
                         SizedBox(height: context.height * 0.05),
                       ],
                     ),
-                    SizedBox(width: context.width * 0.05),
                     Expanded(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: context.height * 0.1,
-                            child: TaskCard(
-                                title: "Mobile App Design",
-                                description: "Mike and ana",
-                                time: "09.00 - 10.00"),
-                          ),
-                          SizedBox(height: context.height * 0.05),
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.only(left: context.width * 0.05),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: context.height * 0.11,
+                              child: TaskCard(
+                                  title: "Mobile App Design",
+                                  description: "Mike and ana",
+                                  time: "09.00 - 10.00"),
+                            ),
+                            SizedBox(height: context.height * 0.05),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -102,83 +108,6 @@ class HomePage extends GetView<HomeController> {
               itemCount: 3,
               shrinkWrap: true,
             ))
-      ],
-    );
-  }
-
-  Row _days(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        DayCard(
-          dateNumber: "12",
-          dayName: "Wed",
-        ),
-        DayCard(
-          dateNumber: "13",
-          dayName: "Thu",
-        ),
-        DayCard(
-          dateNumber: "14",
-          dayName: "Fri",
-        ),
-        DayCard(
-          dateNumber: "15",
-          dayName: "Sat",
-        ),
-      ],
-    );
-  }
-
-  _month(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: InkWell(
-          onTap: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              Text(
-                "Mar",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ],
-          ),
-        )),
-        Expanded(
-          flex: 4,
-          child: Center(
-            child: Text(
-              "April",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 24),
-            ),
-          ),
-        ),
-        Expanded(
-            child: InkWell(
-          onTap: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                "May",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        )),
       ],
     );
   }

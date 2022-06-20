@@ -2,14 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:reminder_app/core/constants/preferences_keys.dart';
-import 'package:reminder_app/core/init/global/global_context.dart';
 import 'package:reminder_app/core/init/init.dart';
 import 'package:reminder_app/core/init/theme/theme_notifier.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/init/cache/localization_manager.dart';
-import 'core/init/cache/preferences_manager.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
 
@@ -20,6 +16,7 @@ Future<void> main() async {
       supportedLocales: LocalizationManager.instance.supportedLocales,
       path: LocalizationManager.instance.localizationPath,
       startLocale: LocalizationManager.instance.getStartLocale(),
+      fallbackLocale: LocalizationManager.instance.getStartLocale(),
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider<ThemeNotifier>(

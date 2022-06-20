@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/colors.dart';
@@ -37,7 +38,6 @@ class TaskCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 2,
                 child: Text(
                   description,
                   style: const TextStyle(
@@ -46,15 +46,16 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Text(
+              /* Expanded(
+                child: AutoSizeText(
                   time,
+                  maxLines: 1,
                   style: const TextStyle(
                     fontSize: 16,
                     color: MyColors.pendingTaskColor,
                   ),
                 ),
-              ),
+              ),*/
             ],
           )
         ],

@@ -5,19 +5,42 @@
     },
     "button": {
         "add": "Ekle",
-        "save": "Kaydet"
+        "save": "Kaydet",
+        "confirm": "Onayla",
+        "cancel": "İptal Et"
     },
     "feature": {
         "monthlyReview": "Aylık Görünüm"
     },
     "task": {
+        "tasks": "Görevler",
         "pendingTask": "Görev bekleniyor",
         "done" : "Tamamlanan",
         "inProgress": "Devam eden",
         "onGoing": "Gelecek",
         "waitReview": "İnceleme için beklemekte"
     },
+    "addReminder": {
+        "title": "Başlık",
+        "description": "Açıklama",
+        "date": "Tarih",
+        "hour": "Saat", 
+        "repeat": "Tekrar",
+        "vibrate": "Alarm çaldığında titret",
+        "selectHour": "Saat Seç",
+        "once": "Tek sefer",
+        "daily": "Günlük",
+        "monToFri": "Pazartesi-Cuma",
+        "custom": "Özel"
+    },
     "basic": {
-        "hi": "Merhaba"
+        "hi": "Merhaba",
+        "appLanguage": "Uygulama Dili",
+        "turkish": "Türkçe",
+        "english": "İngilizce"
+    },
+    "hour": {
+        "hourBeforeMidday": "{}.00",
+        "hourAfterMidday": "{}.00"
     }
 }

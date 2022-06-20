@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:reminder_app/core/components/buttons/custom_button.dart';
 import 'package:reminder_app/core/components/text/text_form_field.dart';
@@ -12,6 +12,7 @@ import 'package:reminder_app/core/constants/colors.dart';
 import 'package:reminder_app/core/constants/repeat_type.dart';
 import 'package:reminder_app/core/extension/time_extension.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
+import 'package:reminder_app/core/init/lang/locale_keys.g.dart';
 import 'package:reminder_app/core/models/reminder_card.dart';
 import 'package:reminder_app/core/routes/app_routes.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
@@ -30,6 +31,7 @@ class AddReminder extends GetView<HomeController> {
             String formattedDate =
                 DateFormat('dd MMMM yyyy', 'tr_TR').format(DateTime.now());
             controller.selectedDate = formattedDate;
+            controller.isVibrate = false;
           },
           didUpdateWidget: (oldWidget, state) {
             print("HEELLLL2");
@@ -67,31 +69,32 @@ class AddReminder extends GetView<HomeController> {
                   ),
                 )),
             IconButton(
-                onPressed: () async {
-                  //openPopup();
-                  await HiveManager.instance.addReminderObject(ReminderCard(
-                      title: controller.inputTitle,
-                      description: controller.inputDescription,
-                      date: controller.datetime,
-                      backgroundColor:
-                          controller.backgroundCurrentColor.toString(),
-                      circleColor: controller.circleCurrentColor.toString(),
-                      textColor: controller.textCurrentColor.toString()));
-                  controller.inputTitle = "";
-                  controller.inputDescription = "";
-                  controller.selectedDate = "";
-                  Get.offAndToNamed(Routes.REMINDER_LIST);
-                },
-                icon: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.blue.shade800),
-                  padding: const EdgeInsets.all(4.0),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                )),
+              onPressed: () async {
+                //openPopup();
+                await HiveManager.instance.addReminderObject(ReminderCard(
+                    title: controller.inputTitle,
+                    description: controller.inputDescription,
+                    date: controller.datetime,
+                    backgroundColor:
+                        controller.backgroundCurrentColor.toString(),
+                    circleColor: controller.circleCurrentColor.toString(),
+                    textColor: controller.textCurrentColor.toString()));
+                controller.inputTitle = "";
+                controller.inputDescription = "";
+                controller.selectedDate = "";
+                Get.offAndToNamed(Routes.REMINDER_LIST);
+              },
+              icon: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.blue.shade800),
+                padding: const EdgeInsets.all(4.0),
+                child: const Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -121,7 +124,7 @@ class AddReminder extends GetView<HomeController> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: context.height * 0.02),
         child: VasseurrBttn(
-          buttonText: "Kaydet",
+          buttonText: LocaleKeys.button_save.tr(),
           fontSize: 20,
           fontWeight: FontWeight.w500,
           width: context.width * 0.4,
@@ -158,7 +161,7 @@ class AddReminder extends GetView<HomeController> {
                     border: Border(
                         bottom: BorderSide(color: Colors.grey, width: 0.2))),
                 child: VasseurrTFF(
-                  hintText: "Title",
+                  hintText: LocaleKeys.addReminder_title.tr(),
                   //  borderWidth: 1.0,
                   keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.next,
@@ -175,7 +178,7 @@ class AddReminder extends GetView<HomeController> {
                     border: Border(
                         bottom: BorderSide(color: Colors.grey, width: 0.2))),
                 child: VasseurrTFF(
-                  hintText: "Description",
+                  hintText: LocaleKeys.addReminder_description.tr(),
                   keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.done,
                   fillColor: Colors.white,
@@ -198,7 +201,7 @@ class AddReminder extends GetView<HomeController> {
                 height: context.height * 0.045,
                 child: Row(
                   children: [
-                    _header("Date"),
+                    _header(LocaleKeys.addReminder_date.tr()),
                     const Spacer(),
                     Container(
                         padding: EdgeInsets.all(context.width * 0.02),
@@ -225,7 +228,7 @@ class AddReminder extends GetView<HomeController> {
                 height: context.height * 0.045,
                 child: Row(
                   children: [
-                    _header("Hour"),
+                    _header(LocaleKeys.addReminder_hour.tr()),
                     const Spacer(),
                     Container(
                       padding: EdgeInsets.symmetric(
@@ -257,17 +260,23 @@ class AddReminder extends GetView<HomeController> {
                 height: context.height * 0.045,
                 child: Row(
                   children: [
-                    _header("Repeat"),
+                    _header(LocaleKeys.addReminder_repeat.tr()),
                     const Spacer(),
                     Container(
                       padding: EdgeInsets.symmetric(
                           vertical: context.height * 0.01,
                           horizontal: context.width * 0.06),
-                      child: _value(controller.selectedRepatTypeIndex == 2
-                          ? "Mon to Fri"
-                          : RepeatType
-                              .values[controller.selectedRepatTypeIndex].name
-                              .toString()),
+                      child: _value(
+                        controller.selectedRepatTypeIndex == 2
+                            ? LocaleKeys.addReminder_monToFri.tr()
+                            : ("addReminder." +
+                                    (RepeatType
+                                            .values[controller
+                                                .selectedRepatTypeIndex]
+                                            .name)
+                                        .toString())
+                                .tr(),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400),
@@ -276,8 +285,13 @@ class AddReminder extends GetView<HomeController> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(child: _header("Vibrate when event time is up")),
+                Flexible(
+                  child: _header(
+                    LocaleKeys.addReminder_vibrate.tr(),
+                  ),
+                ),
                 Switch(
                     activeColor: MyColors.taskCardColor,
                     value: controller.isVibrate,
@@ -315,10 +329,14 @@ class AddReminder extends GetView<HomeController> {
                 ),
                 child: ListView(
                   children: [
-                    _repeatTypeButton(title: "Once", index: 0),
-                    _repeatTypeButton(title: "Daily", index: 1),
-                    _repeatTypeButton(title: "Mon to Fri", index: 2),
-                    _repeatTypeButton(title: "Custom", index: 3),
+                    _repeatTypeButton(
+                        title: LocaleKeys.addReminder_once.tr(), index: 0),
+                    _repeatTypeButton(
+                        title: LocaleKeys.addReminder_daily.tr(), index: 1),
+                    _repeatTypeButton(
+                        title: LocaleKeys.addReminder_monToFri.tr(), index: 2),
+                    _repeatTypeButton(
+                        title: LocaleKeys.addReminder_custom.tr(), index: 3),
                   ],
                 ),
               ),
@@ -370,9 +388,9 @@ class AddReminder extends GetView<HomeController> {
         context: context,
         initialTime: TimeOfDay.now(),
         initialEntryMode: TimePickerEntryMode.dial,
-        confirmText: "Onayla",
-        cancelText: "İptal Et",
-        helpText: "Saat Seç");
+        confirmText: LocaleKeys.button_confirm.tr(),
+        cancelText: LocaleKeys.button_cancel.tr(),
+        helpText: LocaleKeys.addReminder_selectHour.tr());
 
     if (timeOfDay != null && timeOfDay != controller.timeOfDay) {
       if (timeOfDay.compareTo(controller.timeOfDay) == -1) {
@@ -455,15 +473,16 @@ class AddReminder extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _infoText(
-                controller.inputTitle == "" ? "Title" : controller.inputTitle),
+            _infoText(controller.inputTitle == ""
+                ? LocaleKeys.addReminder_title.tr()
+                : controller.inputTitle),
             //  const SizedBox(height: 8),
             _infoText(controller.inputDescription == ""
-                ? "Description"
+                ? LocaleKeys.addReminder_description.tr()
                 : controller.inputDescription),
             // const SizedBox(height: 8),
             _infoText(controller.selectedDate == ""
-                ? "Date"
+                ? LocaleKeys.addReminder_date.tr()
                 : controller.selectedDate),
           ],
         ),

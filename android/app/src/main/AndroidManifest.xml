@@ -2,6 +2,7 @@
     package="com.example.reminder_app">
    <application
         android:label="reminder_app"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

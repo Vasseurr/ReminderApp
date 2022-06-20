@@ -2,7 +2,9 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:reminder_app/core/constants/colors.dart';
+import 'package:reminder_app/core/init/theme/theme_notifier.dart';
 
 import '../../../home/controller/home_controller.dart';
 
@@ -25,12 +27,17 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.backgroundColor,
+      /*  context.read<ThemeNotifier>().currentTheme == ThemeData.light()
+              ? MyColors.backgroundColor
+              : Colors.black,*/
       appBar: AppBar(
         toolbarHeight: context.height * 0.1,
         backgroundColor: MyColors.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<ThemeNotifier>().changeTheme();
+          },
           icon: const Icon(
             Icons.menu,
             size: 30,

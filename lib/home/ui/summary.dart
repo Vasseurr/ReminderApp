@@ -122,7 +122,7 @@ class Summary extends StatelessWidget {
         ),
         SizedBox(height: context.getHeight * 0.02),
         Text(
-          "6" + " " + LocaleKeys.task_pendingTask.tr(),
+          "6 " + LocaleKeys.task_pendingTask.tr(),
           style: const TextStyle(
             fontSize: 17,
             color: MyColors.pendingTaskColor,

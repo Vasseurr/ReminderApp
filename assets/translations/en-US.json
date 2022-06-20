@@ -1,0 +1,23 @@
+{
+    "login": {
+        "username": "Username",
+        "password": "Password"
+    },
+    "button": {
+        "add": "Add",
+        "save": "Save"
+    },
+    "feature": {
+        "monthlyReview": "Monthly Review"
+    },
+    "task": {
+        "pendingTask": "Tasks are pending",
+        "done" : "Done",
+        "inProgress": "In Progress",
+        "onGoing": "OnGoing",
+        "waitReview": "Waiting for Review"
+    },
+    "basic": {
+        "hi": "Hi"
+    }
+}

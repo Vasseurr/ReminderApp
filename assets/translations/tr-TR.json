@@ -1,0 +1,23 @@
+{
+    "login": {
+        "username": "Kullanıcı Adı",
+        "password": "Şifre"
+    },
+    "button": {
+        "add": "Ekle",
+        "save": "Kaydet"
+    },
+    "feature": {
+        "monthlyReview": "Aylık Görünüm"
+    },
+    "task": {
+        "pendingTask": "Görev bekleniyor",
+        "done" : "Tamamlanan",
+        "inProgress": "Devam eden",
+        "onGoing": "Gelecek",
+        "waitReview": "İnceleme için beklemekte"
+    },
+    "basic": {
+        "hi": "Merhaba"
+    }
+}

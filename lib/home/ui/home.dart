@@ -10,6 +10,8 @@ import '../../core/components/widgets/custom_scaffold.dart';
 import 'notification.dart';
 
 class Home extends GetView<HomeController> {
+  const Home({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(

@@ -34,6 +34,7 @@ class TotalTaskCard extends StatelessWidget {
           SizedBox(height: context.getHeight * 0.02),
           Text(
             type,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 18,
               color: MyColors.pendingTaskColor,

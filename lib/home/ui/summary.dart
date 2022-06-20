@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:reminder_app/core/constants/colors.dart';
 import 'package:reminder_app/core/constants/icon_URL.dart';
 import 'package:reminder_app/core/extension/context_extension.dart';
+import 'package:reminder_app/core/init/lang/locale_keys.g.dart';
 
 import '../../core/components/widgets/custom_staggered_grid.dart';
 
@@ -47,9 +49,9 @@ class Summary extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "Monthly Review",
-          style: TextStyle(
+        Text(
+          LocaleKeys.feature_monthlyReview.tr(),
+          style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18,
             color: Colors.white,
@@ -113,15 +115,15 @@ class Summary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Hi Ghulam",
-          style: TextStyle(
+        Text(
+          LocaleKeys.basic_hi.tr() + " Okan",
+          style: const TextStyle(
               fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
         ),
         SizedBox(height: context.getHeight * 0.02),
-        const Text(
-          "6 Tasks are pending",
-          style: TextStyle(
+        Text(
+          "6" + " " + LocaleKeys.task_pendingTask.tr(),
+          style: const TextStyle(
             fontSize: 17,
             color: MyColors.pendingTaskColor,
           ),

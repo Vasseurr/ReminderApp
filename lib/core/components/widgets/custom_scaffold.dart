@@ -39,14 +39,13 @@ class _CustomScaffoldState extends State<CustomScaffold> {
             padding: EdgeInsets.symmetric(
                 horizontal: context.width * 0.01,
                 vertical: context.height * 0.01),
-            child: InkWell(
-              onTap: () {},
-              focusColor: MyColors.backgroundColor,
-              child: const CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
-                    "https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Image-File.png"),
+            child: IconButton(
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+                size: 30,
               ),
+              onPressed: () {},
             ),
           )
         ],
@@ -70,8 +69,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           CustomNavigationBarItem(icon: const Icon(CupertinoIcons.home)),
           CustomNavigationBarItem(icon: const Icon(CupertinoIcons.add_circled)),
           CustomNavigationBarItem(icon: const Icon(Icons.task)),
-          CustomNavigationBarItem(
-              icon: const Icon(Icons.notifications_none_rounded)),
+          CustomNavigationBarItem(icon: const Icon(Icons.history_rounded)),
         ],
       ),
     );

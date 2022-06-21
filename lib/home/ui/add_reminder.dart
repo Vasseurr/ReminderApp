@@ -129,8 +129,8 @@ class AddReminder extends GetView<HomeController> {
           fontWeight: FontWeight.w500,
           width: context.width * 0.4,
           onPressed: () {
-            //! Control title, description and date are not null
-            //! Select date + select hour (ex. 9-10)
+            //TODO: Control title, description and date are not null
+            //TODO: Select date + select hour (ex. 9-10)
           },
           buttonColor: MyColors.taskCardColor,
           borderColor: MyColors.taskCardColor,
@@ -394,7 +394,7 @@ class AddReminder extends GetView<HomeController> {
 
     if (timeOfDay != null && timeOfDay != controller.timeOfDay) {
       if (timeOfDay.compareTo(controller.timeOfDay) == -1) {
-        //! Check date, ıf same day, check hour and minute
+        //TODO: Check date, ıf same day, check hour and minute
         Utils.instance
             .showSnackBar(context, content: "Geriye dönük oluşturulamaz");
         return;

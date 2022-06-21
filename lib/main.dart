@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:reminder_app/core/init/global/global_context.dart';
 import 'package:reminder_app/core/init/init.dart';
 import 'package:reminder_app/core/init/theme/theme_notifier.dart';
 
@@ -19,6 +20,8 @@ Future<void> main() async {
       fallbackLocale: LocalizationManager.instance.getStartLocale(),
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider<GlobalContext>(
+              create: (context) => GlobalContext()),
           ChangeNotifierProvider<ThemeNotifier>(
               create: (context) => ThemeNotifier()),
         ],

@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:provider/provider.dart';
+import 'package:reminder_app/core/extension/lottie_path_extension.dart';
 import 'package:reminder_app/core/init/global/global_context.dart';
+import 'package:reminder_app/core/init/theme/theme_notifier.dart';
 
 import '../../constants/colors.dart';
 import '../../init/lang/locale_keys.g.dart';
@@ -62,6 +64,17 @@ class CustomDrawer extends StatelessWidget {
                 trailing: Icons.keyboard_arrow_right_sharp,
                 onTap: () {}),
             _pushNotificationSwitch(context),
+            ListTile(
+              //leading: Icon(Icons.theme),
+              title: Text('Theme Change',
+                  style: context.textTheme.headline6!
+                      .copyWith(color: Colors.white, fontSize: 16)),
+              trailing: IconButton(
+                  icon: context.watch<ThemeNotifier>().isThemeLight
+                      ? LottiePathEnum.MOON.toWidget
+                      : LottiePathEnum.SUNNY.toWidget,
+                  onPressed: () => context.read<ThemeNotifier>().changeTheme()),
+            ),
             // _englishLng(context),
             //  _turkishLng(context),
             _logout(context),

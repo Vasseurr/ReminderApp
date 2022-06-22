@@ -35,6 +35,12 @@ abstract class  LocaleKeys {
   static const basic_turkish = 'basic.turkish';
   static const basic_english = 'basic.english';
   static const basic = 'basic';
+  static const page_home = 'page.home';
+  static const page_addReminder = 'page.addReminder';
+  static const page_summary = 'page.summary';
+  static const page_history = 'page.history';
+  static const page_notifications = 'page.notifications';
+  static const page = 'page';
   static const hour_hourBeforeMidday = 'hour.hourBeforeMidday';
   static const hour_hourAfterMidday = 'hour.hourAfterMidday';
   static const hour = 'hour';

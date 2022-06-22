@@ -5,6 +5,7 @@ import 'package:get/get.dart' hide Trans;
 import 'package:reminder_app/core/constants/colors.dart';
 
 import '../../../home/controller/home_controller.dart';
+import '../../routes/app_routes.dart';
 import 'custom_drawer.dart';
 
 class CustomScaffold extends StatefulWidget {
@@ -31,6 +32,10 @@ class _CustomScaffoldState extends State<CustomScaffold> {
               ? MyColors.backgroundColor
               : Colors.black,*/
       appBar: AppBar(
+        title: Text(
+          _controller.appBarTitle,
+          style: context.textTheme.headline6!.copyWith(color: Colors.white),
+        ),
         toolbarHeight: context.height * 0.1,
         backgroundColor: MyColors.backgroundColor,
         elevation: 0,
@@ -45,7 +50,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 color: Colors.white,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(Routes.NOTIFICATIONS),
             ),
           )
         ],

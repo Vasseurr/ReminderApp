@@ -17,7 +17,7 @@ Future<void> main() async {
       supportedLocales: LocalizationManager.instance.supportedLocales,
       path: LocalizationManager.instance.localizationPath,
       startLocale: LocalizationManager.instance.getStartLocale(),
-      fallbackLocale: LocalizationManager.instance.getStartLocale(),
+      fallbackLocale: LocalizationManager.instance.getFallbackLocale(),
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider<GlobalContext>(

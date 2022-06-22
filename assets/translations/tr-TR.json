@@ -39,6 +39,13 @@
         "turkish": "Türkçe",
         "english": "İngilizce"
     },
+    "page": {
+        "home": "Anasayfa",
+        "addReminder": "Hatırlatıcı Ekle",
+        "summary": "Özet",
+        "history": "Geçmiş Hatırlatıcılar",
+        "notifications": "Bildirimler"
+    },
     "hour": {
         "hourBeforeMidday": "{}.00",
         "hourAfterMidday": "{}.00"

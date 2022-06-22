@@ -5,4 +5,5 @@ abstract class Routes {
   static const REMINDER_LIST = '/reminderlist';
   static const ADD_REMINDER = '/addreminder';
   static const SETTINGS = '/settings';
+  static const NOTIFICATIONS = '/notifications';
 }

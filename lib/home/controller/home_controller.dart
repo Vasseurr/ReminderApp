@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:reminder_app/core/constants/repeat_type.dart';
 import 'package:reminder_app/core/init/cache/hive_manager.dart';
-import 'package:reminder_app/core/models/reminder_card.dart';
+import 'package:reminder_app/core/init/lang/locale_keys.g.dart';
 import 'package:reminder_app/home/repository/home_repository.dart';
 
 class HomeController extends GetxController {
@@ -14,8 +15,26 @@ class HomeController extends GetxController {
   set currentBarIndex(value) => _currentBarIndex.value = value;
   get currentBarIndex => _currentBarIndex.value;
 
+  final _appBarTitle = LocaleKeys.page_home.tr().obs;
+  set appBarTitle(value) => _appBarTitle.value = value;
+  get appBarTitle => _appBarTitle.value;
+
   changeBarIndex(int index) {
     _currentBarIndex.value = index;
+    switch (index) {
+      case 0:
+        _appBarTitle.value = LocaleKeys.page_home.tr();
+        break;
+      case 1:
+        _appBarTitle.value = LocaleKeys.page_addReminder.tr();
+        break;
+      case 2:
+        _appBarTitle.value = LocaleKeys.page_summary.tr();
+        break;
+      case 3:
+        _appBarTitle.value = LocaleKeys.page_history.tr();
+        break;
+    }
   }
 
   final _isDarkMode = false.obs;
@@ -101,4 +120,9 @@ class HomeController extends GetxController {
   final _selectedRepatTypeIndex = 0.obs;
   set selectedRepatTypeIndex(value) => _selectedRepatTypeIndex.value = value;
   get selectedRepatTypeIndex => _selectedRepatTypeIndex.value;
+
+  // * History
+  final _selectedDataCountIndex = 0.obs;
+  set selectedDataCountIndex(value) => _selectedDataCountIndex.value = value;
+  get selectedDataCountIndex => _selectedDataCountIndex.value;
 }

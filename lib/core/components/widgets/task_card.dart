@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:reminder_app/core/extension/context_extension.dart';
 
 import '../../constants/colors.dart';
 
@@ -17,6 +18,7 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: context.getHeight * 0.11,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: MyColors.taskCardColor,
@@ -35,27 +37,27 @@ class TaskCard extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(
+                child: AutoSizeText(
                   description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  minFontSize: 15,
                   style: const TextStyle(
                     fontSize: 17,
                     color: MyColors.pendingTaskColor,
                   ),
                 ),
               ),
-              /* Expanded(
-                child: AutoSizeText(
-                  time,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: MyColors.pendingTaskColor,
-                  ),
+              AutoSizeText(
+                time,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: MyColors.pendingTaskColor,
                 ),
-              ),*/
+              ),
             ],
           )
         ],

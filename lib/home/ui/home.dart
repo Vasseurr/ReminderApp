@@ -7,7 +7,7 @@ import 'package:reminder_app/home/ui/summary.dart';
 import 'package:reminder_app/home/ui/home_page.dart';
 
 import '../../core/components/widgets/custom_scaffold.dart';
-import 'notification.dart';
+import 'history.dart';
 
 class Home extends GetView<HomeController> {
   const Home({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class Home extends GetView<HomeController> {
               HomePage(),
               AddReminder(),
               Summary(),
-              Notifications(),
+              History(),
             ],
           ),
         ),

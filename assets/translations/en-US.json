@@ -39,6 +39,13 @@
         "turkish": "Turkish",
         "english": "English"
     },
+    "page": {
+        "home": "Home Page",
+        "addReminder": "Add Reminder",
+        "summary": "Summary",
+        "history": "Past Reminders",
+        "notifications": "Notifications"
+    },
     "hour": {
         "hourBeforeMidday": "{}.00 AM",
         "hourAfterMidday": "{}.00 PM"

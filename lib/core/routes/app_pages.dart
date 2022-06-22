@@ -4,6 +4,7 @@ import 'package:reminder_app/home/bindings/home_binding.dart';
 import 'package:reminder_app/home/ui/add_reminder.dart';
 import 'package:reminder_app/home/ui/home.dart';
 import 'package:reminder_app/home/ui/home_page.dart';
+import 'package:reminder_app/home/ui/notification.dart';
 import 'package:reminder_app/home/ui/reminder.dart';
 import 'package:reminder_app/home/ui/settings.dart';
 
@@ -31,6 +32,10 @@ class AppPages {
     GetPage(
         name: Routes.SETTINGS,
         page: () => const Settings(),
+        binding: HomeBinding()),
+    GetPage(
+        name: Routes.NOTIFICATIONS,
+        page: () => const Notifications(),
         binding: HomeBinding()),
   ];
 }

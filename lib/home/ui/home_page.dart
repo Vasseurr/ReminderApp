@@ -10,8 +10,6 @@ import 'package:reminder_app/core/extension/context_extension.dart';
 import 'package:reminder_app/core/init/lang/locale_keys.g.dart';
 import 'package:reminder_app/home/controller/home_controller.dart';
 
-import '../../core/components/widgets/day_card.dart';
-
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -90,13 +88,10 @@ class HomePage extends GetView<HomeController> {
                         padding: EdgeInsets.only(left: context.width * 0.05),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: context.height * 0.11,
-                              child: TaskCard(
-                                  title: "Mobile App Design",
-                                  description: "Mike and ana",
-                                  time: "09.00 - 10.00"),
-                            ),
+                            TaskCard(
+                                title: "Mobile App Design",
+                                description: "Mike and ana",
+                                time: "09.15"),
                             SizedBox(height: context.height * 0.05),
                           ],
                         ),

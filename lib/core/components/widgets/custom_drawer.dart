@@ -6,6 +6,7 @@ import 'package:reminder_app/core/extension/lottie_path_extension.dart';
 import 'package:reminder_app/core/init/global/global_context.dart';
 import 'package:reminder_app/core/init/theme/theme_notifier.dart';
 
+import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 import '../../init/lang/locale_keys.g.dart';
 import '../../routes/app_routes.dart';
@@ -27,10 +28,21 @@ class CustomDrawer extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
+                /*  const CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage(
                     "https://i.picsum.photos/id/110/200/200.jpg?hmac=aekmsQTsPRt4hCd1khMC5QVihAaBeTigUCpcDBzhXlY",
+                  ),
+                ),*/
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: AppConstants.avatarRadius,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(AppConstants.avatarRadius)),
+                    child: Image.network(
+                      "https://i.picsum.photos/id/110/200/200.jpg?hmac=aekmsQTsPRt4hCd1khMC5QVihAaBeTigUCpcDBzhXlY",
+                    ),
                   ),
                 ),
                 Padding(
